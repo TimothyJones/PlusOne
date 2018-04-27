@@ -1,0 +1,130 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+body {
+  font: 14px 'Century Gothic', Futura, sans-serif;
+  margin: 20px;
+}
+
+ol,
+ul {
+  padding-left: 30px;
+}
+
+.board-row:after {
+  clear: both;
+  content: '';
+  display: table;
+}
+
+.status {
+  margin-bottom: 10px;
+}
+
+.square {
+  background: #fff;
+  float: left;
+  border-radius: 2px;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 54px;
+  height: 54px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 54px;
+}
+
+.leftBorder {
+  border-left: 2px solid #222 !important;
+}
+
+.rightBorder {
+  border-right: 2px solid #222 !important;
+}
+
+.topBorder {
+  border-top: 2px solid #222 !important;
+}
+
+.bottomBorder {
+  border-bottom: 2px solid #222 !important;
+}
+
+.color1 {
+  background: #f44336;
+  border: #f44336;
+}
+
+.color2 {
+  background: #9c27b0;
+  border: #9c27b0;
+}
+
+.color3 {
+  background: #3f51b5;
+}
+
+.color4 {
+  background: #03a9f4;
+}
+
+.color5 {
+  background: #009688;
+}
+
+.color6 {
+  background: #8bc34a;
+}
+
+.color7 {
+  background: #ffc107;
+}
+
+.color8 {
+  background: #ff5722;
+}
+
+.color9 {
+  background: #9e9e9e;
+}
+
+.color10 {
+  background: #e91e63;
+}
+
+.color11 {
+  background: #673ab7;
+}
+
+.color12 {
+  background: #2196f3;
+}
+
+.color13 {
+  background: #00bcd4;
+}
+
+.color14 {
+  background: ;
+}
+
+.square:focus {
+  outline: none;
+}
+
+.kbd-navigation .square:focus {
+  background: #ddd;
+}
+
+.game {
+  display: flex;
+  flex-direction: row;
+}
+
+.game-info {
+  margin-left: 20px;
+}
