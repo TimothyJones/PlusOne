@@ -26,7 +26,7 @@ ul {
 .square {
   background: #fff;
   float: left;
-  border-radius: 2px;
+  border: 0px;
   font-size: 24px;
   font-weight: bold;
   line-height: 54px;
@@ -36,6 +36,7 @@ ul {
   padding: 0;
   text-align: center;
   width: 54px;
+  border-radius: 15%;
 }
 
 .leftBorder {
@@ -56,12 +57,10 @@ ul {
 
 .color1 {
   background: #f44336;
-  border: #f44336;
 }
 
 .color2 {
   background: #9c27b0;
-  border: #9c27b0;
 }
 
 .color3 {
@@ -109,7 +108,47 @@ ul {
 }
 
 .color14 {
-  background: ;
+  background: #4caf50;
+}
+
+.color15 {
+  background: #cddc39;
+}
+
+.color16 {
+  background: #ffeb3b;
+}
+
+.color17 {
+  background: #ff9800;
+}
+
+.color18 {
+  background: #ffebee;
+}
+
+.color19 {
+  background: #fce4ec;
+}
+
+.color20 {
+  background: #f3e5f5;
+}
+
+.color21 {
+  background: #ede7f6;
+}
+
+.color22 {
+  background: #e8eaf6;
+}
+
+.color23 {
+  background: #e3f2fd;
+}
+
+.color24 {
+  background: #e1f5fe;
 }
 
 .square:focus {
@@ -123,6 +162,11 @@ ul {
 .game {
   display: flex;
   flex-direction: row;
+}
+
+.game-board {
+  background: #000;
+  border: 2px solid #000;
 }
 
 .game-info {
