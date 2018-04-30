@@ -23,6 +23,11 @@ ul {
   margin-bottom: 10px;
 }
 
+.warning {
+  color: #f44336;
+  font-weight: bold;
+}
+
 .square {
   background: #fff;
   float: left;

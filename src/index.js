@@ -51,7 +51,8 @@ class Board extends React.Component {
     );
 
     this.state = {
-      squares: squares
+      squares: squares,
+      canMove: true
     };
   }
 
@@ -67,6 +68,7 @@ class Board extends React.Component {
       return Math.max(m, rowMax);
     }, 0);
   }
+
   getMin(squares) {
     return squares.reduce(function(m, arr) {
       const rowMax = arr.reduce(function(a, b) {
@@ -82,7 +84,7 @@ class Board extends React.Component {
 
   refill(squares) {
     const max = this.getMax(squares);
-    const min = this.getMin(squares);
+    const min = Math.max(max - 7, 1);
 
     return squares.map((arr, j) =>
       arr.map(sq => {
@@ -91,6 +93,22 @@ class Board extends React.Component {
             value: Math.floor(Math.random() * (max - min)) + min,
             drop: 5 - j,
             toggle: !sq.toggle
+          };
+        } else return sq;
+      })
+    );
+  }
+
+  killMinimum(squares) {
+    const min = this.getMin(squares);
+
+    return squares.map((arr, j) =>
+      arr.map(sq => {
+        if (sq.value === min) {
+          return {
+            value: null,
+            drop: sq.drop,
+            toggle: sq.toggle
           };
         } else return sq;
       })
@@ -128,6 +146,7 @@ class Board extends React.Component {
     const y = this.props.y;
 
     const value = squares[i][j].value;
+    const max = this.getMax(squares);
 
     function update(i, j) {
       if (i < 0 || i >= x) return 0;
@@ -146,6 +165,9 @@ class Board extends React.Component {
     }
     if (update(i, j) > 1) {
       squares[i][j].value = value + 1;
+      if (squares[i][j].value > max) {
+        squares = this.killMinimum(squares);
+      }
     } else {
       // Still have to do this, because update replaces it with null
       squares[i][j].value = value;
@@ -157,13 +179,42 @@ class Board extends React.Component {
     const squares = this.state.squares.map(function(arr) {
       return arr.slice();
     });
-    this.setState({ squares: this.collapse(i, j, squares) });
+
+    const newSquares = this.collapse(i, j, squares);
+    this.setState({
+      squares: newSquares,
+      canMove: this.canMove(newSquares)
+    });
+  }
+
+  canMove(squares) {
+    const x = this.props.x;
+    const y = this.props.y;
+    function possibleMoveWith(i, j, value) {
+      if (i < 0 || i >= x) return false;
+      if (j < 0 || j >= y) return false;
+      if (squares[i][j].value === value) return true;
+      return false;
+    }
+
+    for (var j = 0; j < this.props.y; j++) {
+      for (var i = 0; i < this.props.x; i++) {
+        const { value } = squares[i][j];
+        if (
+          possibleMoveWith(i - 1, j, value) ||
+          possibleMoveWith(i + 1, j, value) ||
+          possibleMoveWith(i, j - 1, value) ||
+          possibleMoveWith(i, j + 1, value)
+        )
+          return true;
+      }
+    }
+    return false;
   }
 
   renderSquare(i, j) {
     const x = this.props.x;
     const y = this.props.y;
-
     const squares = this.state.squares;
 
     const { value, drop, toggle } = squares[i][j];
@@ -209,7 +260,18 @@ class Board extends React.Component {
       );
     }
 
-    return <div>{rows}</div>;
+    const moves = this.state.canMove ? (
+      <div />
+    ) : (
+      <p class="warning"> There are no move moves!</p>
+    );
+
+    return (
+      <div>
+        <div>{rows}</div>
+        {moves}
+      </div>
+    );
   }
 }
 
