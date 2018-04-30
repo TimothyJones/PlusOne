@@ -272,7 +272,12 @@ class Board extends React.Component {
     const moves = this.state.canMove ? (
       <div />
     ) : (
-      <p class="warning"> There are no move moves!</p>
+      <div>
+        <p class="warning"> There are no move moves!</p>
+        <p class={'color' + this.state.max}>
+          Your score is <span>{this.state.max}</span>
+        </p>
+      </div>
     );
 
     return (
