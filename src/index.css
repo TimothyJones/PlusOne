@@ -55,6 +55,54 @@ ul {
   border-bottom: 2px solid #222 !important;
 }
 
+.drop5-exit,
+.drop4-exit,
+.drop3-exit,
+.drop2-exit,
+.drop1-exit {
+  transform: translate(0px, 0px);
+  transition: all 300ms ease-out;
+}
+.drop1-enter,
+.drop2-enter,
+.drop3-enter,
+.drop4-enter,
+.drop5-enter {
+  transform: translate(0px, 0px);
+  transition: all 300ms ease-out;
+}
+.drop1-enter-active,
+.drop1-exit-active {
+  transform: translate(0px, -54px);
+  transition-property: none;
+}
+.drop2-enter-active,
+.drop2-exit-active {
+  transform: translate(0px, -108px);
+  transition-property: none;
+}
+.drop3-enter-active,
+.drop3-exit-active {
+  transform: translate(0px, -216px);
+  transition-property: none;
+}
+.drop4-enter-active,
+.drop4-exit-active {
+  transform: translate(0px, -108px);
+  transition-property: none;
+}
+.drop5-enter-active,
+.drop5-exit-active {
+  transform: translate(0px, -270px);
+  transition-property: none;
+}
+
+button {
+  animation-name: movingBox;
+  animation-duration: 300ms;
+  transition: transform 300ms;
+}
+
 .color1 {
   background: #f44336;
 }

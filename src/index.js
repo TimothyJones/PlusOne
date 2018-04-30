@@ -3,16 +3,38 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import classnames from 'classnames';
 import registerServiceWorker from './registerServiceWorker';
+import { CSSTransition } from 'react-transition-group';
+
+function startAnimation(callback) {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      callback();
+    });
+  });
+}
 
 class Square extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      in: false
+    };
+  }
+
   render() {
     return (
-      <button
-        className={classnames('square', this.props.style)}
-        onClick={() => this.props.onClick()}
+      <CSSTransition
+        in={this.props.toggle}
+        timeout={10}
+        classNames={'drop' + this.props.drop}
       >
-        {this.props.value}
-      </button>
+        <button
+          className={classnames('square', this.props.style)}
+          onClick={() => this.props.onClick()}
+        >
+          {this.props.value}
+        </button>
+      </CSSTransition>
     );
   }
 }
@@ -21,7 +43,11 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     const squares = Array.from(Array(props.x), () =>
-      new Array(props.y).fill(null).map(() => Math.round(Math.random() * 4) + 1)
+      new Array(props.y).fill(null).map(() => ({
+        value: Math.round(Math.random() * 4) + 1,
+        drop: 5,
+        toggle: false
+      }))
     );
 
     this.state = {
@@ -32,16 +58,20 @@ class Board extends React.Component {
   refill(squares) {
     const max = squares.reduce(function(m, arr) {
       const rowMax = arr.reduce(function(a, b) {
-        return Math.max(a, b);
+        return Math.max(a, b.value);
       }, 0);
       return Math.max(m, rowMax);
     }, 0);
 
-    return squares.map(arr =>
-      arr.map(val => {
-        if (val === null) {
-          return Math.round(Math.random() * (max - 2)) + 1;
-        } else return val;
+    return squares.map((arr, j) =>
+      arr.map(sq => {
+        if (sq.value === null) {
+          return {
+            value: Math.round(Math.random() * (max - 2)) + 1,
+            drop: 5 - j,
+            toggle: !sq.toggle
+          };
+        } else return sq;
       })
     );
   }
@@ -49,13 +79,23 @@ class Board extends React.Component {
   drop(squares) {
     for (var j = this.props.y - 1; j >= 0; j--) {
       for (var i = 0; i < this.props.x; i++) {
-        if (squares[i][j] == null) {
+        if (squares[i][j].value == null) {
           var next = j;
-          while (next >= 0 && squares[i][next] == null) next--;
+          while (next >= 0 && squares[i][next].value == null) next--;
           if (next >= 0) {
-            squares[i][j] = squares[i][next];
-            squares[i][next] = null;
+            squares[i][j] = {
+              value: squares[i][next].value,
+              drop: j - next,
+              toggle: !squares[i][next].toggle
+            };
+            squares[i][next] = {
+              value: null,
+              drop: 0,
+              toggle: squares[i][next].toggle
+            };
           }
+        } else {
+          squares[i][j].drop = 0;
         }
       }
     }
@@ -66,14 +106,14 @@ class Board extends React.Component {
     const x = this.props.x;
     const y = this.props.y;
 
-    const value = squares[i][j];
+    const value = squares[i][j].value;
 
     function update(i, j) {
       if (i < 0 || i >= x) return 0;
       if (j < 0 || j >= y) return 0;
-      if (squares[i][j] !== value) return 0;
+      if (squares[i][j].value !== value) return 0;
       else {
-        squares[i][j] = null;
+        squares[i][j].value = null;
         return (
           1 +
           update(i + 1, j) +
@@ -84,10 +124,10 @@ class Board extends React.Component {
       }
     }
     if (update(i, j) > 1) {
-      squares[i][j] = value + 1;
+      squares[i][j].value = value + 1;
     } else {
       // Still have to do this, because update replaces it with null
-      squares[i][j] = value;
+      squares[i][j].value = value;
     }
     return this.refill(this.drop(squares));
   }
@@ -105,12 +145,12 @@ class Board extends React.Component {
 
     const squares = this.state.squares;
 
-    const value = squares[i][j];
+    const { value, drop, toggle } = squares[i][j];
 
     function borderWith(i, j) {
       if (i < 0 || i >= x) return true;
       if (j < 0 || j >= y) return true;
-      if (squares[i][j] !== value) return true;
+      if (squares[i][j].value !== value) return true;
       return false;
     }
 
@@ -124,9 +164,11 @@ class Board extends React.Component {
 
     return (
       <Square
-        key={j}
+        key={(j + 1) * (i + 1)}
         style={style}
         value={value}
+        drop={drop}
+        toggle={toggle}
         onClick={() => this.handleClick(i, j)}
       />
     );
