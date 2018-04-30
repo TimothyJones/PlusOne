@@ -204,6 +204,10 @@ button {
   background: #e1f5fe;
 }
 
+.maxNumber {
+  background: #e1f5fe;
+}
+
 .square:focus {
   outline: none;
 }

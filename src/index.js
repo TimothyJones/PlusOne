@@ -42,18 +42,22 @@ class Square extends React.Component {
 class Board extends React.Component {
   constructor(props) {
     super(props);
+
+    const maxInitial = 6;
+
     const squares = Array.from(Array(props.x), () =>
       new Array(props.y).fill(null).map(() => ({
-        value: Math.round(Math.random() * 4) + 1,
+        value: Math.round(Math.random() * (maxInitial - 2)) + 1,
         drop: 5,
         toggle: false
       }))
     );
 
-    this.state = {
-      squares: squares,
-      canMove: true
-    };
+    squares[Math.floor(Math.random() * props.x)][
+      Math.floor(Math.random() * props.y)
+    ].value = maxInitial;
+
+    this.state = this.boardState(squares);
   }
 
   getMax(squares) {
@@ -83,7 +87,7 @@ class Board extends React.Component {
   }
 
   refill(squares) {
-    const max = this.getMax(squares);
+    const max = this.state.max;
     const min = Math.max(max - 7, 1);
 
     return squares.map((arr, j) =>
@@ -146,7 +150,7 @@ class Board extends React.Component {
     const y = this.props.y;
 
     const value = squares[i][j].value;
-    const max = this.getMax(squares);
+    const max = this.state.max;
 
     function update(i, j) {
       if (i < 0 || i >= x) return 0;
@@ -180,11 +184,15 @@ class Board extends React.Component {
       return arr.slice();
     });
 
-    const newSquares = this.collapse(i, j, squares);
-    this.setState({
-      squares: newSquares,
-      canMove: this.canMove(newSquares)
-    });
+    this.setState(this.boardState(this.collapse(i, j, squares)));
+  }
+
+  boardState(squares) {
+    return {
+      squares: squares,
+      canMove: this.canMove(squares),
+      max: this.getMax(squares)
+    };
   }
 
   canMove(squares) {
@@ -231,7 +239,8 @@ class Board extends React.Component {
       rightBorder: borderWith(i + 1, j),
       topBorder: borderWith(i, j - 1),
       bottomBorder: borderWith(i, j + 1),
-      ['color' + value]: true
+      ['color' + value]: true,
+      maxNumber: this.state.max === value
     };
 
     return (
