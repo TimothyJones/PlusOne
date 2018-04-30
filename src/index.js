@@ -55,19 +55,40 @@ class Board extends React.Component {
     };
   }
 
-  refill(squares) {
-    const max = squares.reduce(function(m, arr) {
+  getMax(squares) {
+    return squares.reduce(function(m, arr) {
       const rowMax = arr.reduce(function(a, b) {
-        return Math.max(a, b.value);
+        if (b.value === null) {
+          return a;
+        } else {
+          return Math.max(a, b.value);
+        }
       }, 0);
       return Math.max(m, rowMax);
     }, 0);
+  }
+  getMin(squares) {
+    return squares.reduce(function(m, arr) {
+      const rowMax = arr.reduce(function(a, b) {
+        if (b.value === null) {
+          return a;
+        } else {
+          return Math.min(a, b.value);
+        }
+      }, Number.MAX_SAFE_INTEGER);
+      return Math.min(m, rowMax);
+    }, Number.MAX_SAFE_INTEGER);
+  }
+
+  refill(squares) {
+    const max = this.getMax(squares);
+    const min = this.getMin(squares);
 
     return squares.map((arr, j) =>
       arr.map(sq => {
         if (sq.value === null) {
           return {
-            value: Math.round(Math.random() * (max - 2)) + 1,
+            value: Math.floor(Math.random() * (max - min)) + min,
             drop: 5 - j,
             toggle: !sq.toggle
           };
@@ -182,7 +203,7 @@ class Board extends React.Component {
         row.push(this.renderSquare(i, j));
       }
       rows.push(
-        <div className="board-row" key={i}>
+        <div className="board-row" key={j}>
           {row}
         </div>
       );
