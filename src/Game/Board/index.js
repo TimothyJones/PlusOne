@@ -7,7 +7,8 @@ import {
   killMinimum,
   drop,
   canMove,
-  collapse
+  collapse,
+  toggleChanges
 } from './board.js';
 
 export default class Board extends React.Component {
@@ -32,12 +33,13 @@ export default class Board extends React.Component {
   }
 
   handleClick(i, j) {
-    const squares = this.state.squares.map(function(arr) {
-      return arr.slice();
-    });
-
     this.setState(
-      this.boardState(refill(drop(collapse(i, j, squares)), this.state.max))
+      this.boardState(
+        toggleChanges(
+          this.state.squares,
+          refill(drop(collapse(i, j, this.state.squares)), this.state.max)
+        )
+      )
     );
   }
 

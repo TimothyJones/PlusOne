@@ -5,7 +5,8 @@ import {
   killMinimum,
   drop,
   canMove,
-  collapse
+  collapse,
+  toggleChanges
 } from './board.js';
 
 function createBoard() {
@@ -80,7 +81,7 @@ describe('refill function', () => {
     expect(cell.value).toBeGreaterThan(0);
     expect(cell.value).toBeLessThan(10);
     expect(cell.drop).toBeGreaterThan(0);
-    expect(cell.toggle).toBe(false);
+    expect(cell.toggle).toBe(true);
   }
 
   test('Fills when everything is null', () => {
@@ -235,13 +236,13 @@ describe('drop function ', () => {
     expect(newBoard).toEqual([
       [
         { value: null, drop: 0, toggle: true },
-        { value: 2, drop: 1, toggle: false },
+        { value: 2, drop: 1, toggle: true },
         { value: 2, drop: 0, toggle: true }
       ],
       [
         { value: null, drop: 0, toggle: true },
         { value: null, drop: 0, toggle: true },
-        { value: 2, drop: 1, toggle: false }
+        { value: 2, drop: 1, toggle: true }
       ]
     ]);
   });
@@ -379,6 +380,91 @@ describe('collapse function', () => {
       ],
       [
         { value: 3, drop: 0, toggle: true },
+        { value: 2, drop: 0, toggle: true },
+        { value: 3, drop: 0, toggle: true }
+      ]
+    ]);
+  });
+});
+
+describe('toggleChanges function', () => {
+  test('Toggles drops', () => {
+    expect(
+      toggleChanges(
+        [
+          [
+            { value: 3, drop: 0, toggle: true },
+            { value: 3, drop: 0, toggle: true },
+            { value: 1, drop: 0, toggle: true }
+          ],
+          [
+            { value: 3, drop: 0, toggle: true },
+            { value: 2, drop: 0, toggle: true },
+            { value: 3, drop: 0, toggle: true }
+          ]
+        ],
+        [
+          [
+            { value: 4, drop: 3, toggle: true },
+            { value: 1, drop: 3, toggle: true },
+            { value: 2, drop: 3, toggle: true }
+          ],
+          [
+            { value: 4, drop: 1, toggle: true },
+            { value: 2, drop: 0, toggle: true },
+            { value: 3, drop: 0, toggle: true }
+          ]
+        ]
+      )
+    ).toEqual([
+      [
+        { value: 4, drop: 3, toggle: false },
+        { value: 1, drop: 3, toggle: false },
+        { value: 2, drop: 3, toggle: false }
+      ],
+      [
+        { value: 4, drop: 1, toggle: false },
+        { value: 2, drop: 0, toggle: true },
+        { value: 3, drop: 0, toggle: true }
+      ]
+    ]);
+  });
+  test('Toggles single changes', () => {
+    expect(
+      toggleChanges(
+        [
+          [
+            { value: 3, drop: 0, toggle: true },
+            { value: 3, drop: 0, toggle: true },
+            { value: 1, drop: 0, toggle: true }
+          ],
+          [
+            { value: 3, drop: 0, toggle: true },
+            { value: 2, drop: 0, toggle: true },
+            { value: 3, drop: 0, toggle: true }
+          ]
+        ],
+        [
+          [
+            { value: 4, drop: 3, toggle: true },
+            { value: 1, drop: 3, toggle: true },
+            { value: 2, drop: 3, toggle: true }
+          ],
+          [
+            { value: 4, drop: 0, toggle: true },
+            { value: 2, drop: 0, toggle: true },
+            { value: 3, drop: 0, toggle: true }
+          ]
+        ]
+      )
+    ).toEqual([
+      [
+        { value: 4, drop: 3, toggle: false },
+        { value: 1, drop: 3, toggle: false },
+        { value: 2, drop: 3, toggle: false }
+      ],
+      [
+        { value: 4, drop: 0, toggle: false },
         { value: 2, drop: 0, toggle: true },
         { value: 3, drop: 0, toggle: true }
       ]

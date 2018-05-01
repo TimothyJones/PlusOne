@@ -35,7 +35,7 @@ export function refill(squares, max) {
         return {
           value: Math.floor(Math.random() * (max - min)) + min,
           drop: squares[0].length - j,
-          toggle: !sq.toggle
+          toggle: sq.toggle
         };
       } else return sq;
     })
@@ -71,7 +71,7 @@ export function drop(squares) {
           squares[i][j] = {
             value: squares[i][next].value,
             drop: j - next,
-            toggle: !squares[i][next].toggle
+            toggle: squares[i][j].toggle
           };
           squares[i][next].value = null;
         }
@@ -106,6 +106,25 @@ export function canMove(squares) {
     }
   }
   return false;
+}
+
+export function toggleChanges(oldBoard, newBoard) {
+  const squares = JSON.parse(JSON.stringify(newBoard));
+  const x = squares.length;
+  const y = squares[0].length;
+
+  for (var i = 0; i < x; i++) {
+    for (var j = 0; j < y; j++) {
+      if (
+        oldBoard[i][j].value != newBoard[i][j].value ||
+        newBoard[i][j].drop > 0
+      ) {
+        squares[i][j].toggle = !squares[i][j].toggle;
+      }
+    }
+  }
+
+  return squares;
 }
 
 export function collapse(i, j, squares) {
