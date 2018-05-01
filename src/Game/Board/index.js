@@ -1,5 +1,14 @@
 import React from 'react';
-import Square from './Square';
+import Square from './components/Square';
+import {
+  getMax,
+  getMin,
+  refill,
+  killMinimum,
+  drop,
+  canMove,
+  collapse
+} from './board.js';
 
 export default class Board extends React.Component {
   constructor(props) {
@@ -22,164 +31,20 @@ export default class Board extends React.Component {
     this.state = this.boardState(squares);
   }
 
-  getMax(squares) {
-    return squares.reduce(function(m, arr) {
-      const rowMax = arr.reduce(function(a, b) {
-        if (b.value === null) {
-          return a;
-        } else {
-          return Math.max(a, b.value);
-        }
-      }, 0);
-      return Math.max(m, rowMax);
-    }, 0);
-  }
-
-  getMin(squares) {
-    return squares.reduce(function(m, arr) {
-      const rowMax = arr.reduce(function(a, b) {
-        if (b.value === null) {
-          return a;
-        } else {
-          return Math.min(a, b.value);
-        }
-      }, Number.MAX_SAFE_INTEGER);
-      return Math.min(m, rowMax);
-    }, Number.MAX_SAFE_INTEGER);
-  }
-
-  refill(squares) {
-    const max = this.state.max;
-    const min = Math.max(max - 7, 1);
-
-    return squares.map((arr, j) =>
-      arr.map(sq => {
-        if (sq.value === null) {
-          return {
-            value: Math.floor(Math.random() * (max - min)) + min,
-            drop: 5 - j,
-            toggle: !sq.toggle
-          };
-        } else return sq;
-      })
-    );
-  }
-
-  killMinimum(squares) {
-    const min = this.getMin(squares);
-
-    return squares.map((arr, j) =>
-      arr.map(sq => {
-        if (sq.value === min) {
-          return {
-            value: null,
-            drop: sq.drop,
-            toggle: sq.toggle
-          };
-        } else return sq;
-      })
-    );
-  }
-
-  drop(squares) {
-    for (var j = this.props.y - 1; j >= 0; j--) {
-      for (var i = 0; i < this.props.x; i++) {
-        if (squares[i][j].value == null) {
-          var next = j;
-          while (next >= 0 && squares[i][next].value == null) next--;
-          if (next >= 0) {
-            squares[i][j] = {
-              value: squares[i][next].value,
-              drop: j - next,
-              toggle: !squares[i][next].toggle
-            };
-            squares[i][next] = {
-              value: null,
-              drop: 0,
-              toggle: squares[i][next].toggle
-            };
-          }
-        } else {
-          squares[i][j].drop = 0;
-        }
-      }
-    }
-    return squares;
-  }
-
-  collapse(i, j, squares) {
-    const x = this.props.x;
-    const y = this.props.y;
-
-    const value = squares[i][j].value;
-    const max = this.state.max;
-
-    function update(i, j) {
-      if (i < 0 || i >= x) return 0;
-      if (j < 0 || j >= y) return 0;
-      if (squares[i][j].value !== value) return 0;
-      else {
-        squares[i][j].value = null;
-        return (
-          1 +
-          update(i + 1, j) +
-          update(i - 1, j) +
-          update(i, j + 1) +
-          update(i, j - 1)
-        );
-      }
-    }
-    if (update(i, j) > 1) {
-      squares[i][j].value = value + 1;
-      if (squares[i][j].value > max) {
-        squares = this.killMinimum(squares);
-      }
-    } else {
-      // Still have to do this, because update replaces it with null
-      squares[i][j].value = value;
-    }
-    return this.refill(this.drop(squares));
-  }
-
   handleClick(i, j) {
     const squares = this.state.squares.map(function(arr) {
       return arr.slice();
     });
 
-    this.setState(this.boardState(this.collapse(i, j, squares)));
+    this.setState(this.boardState(collapse(i, j, squares)));
   }
 
   boardState(squares) {
     return {
       squares: squares,
-      canMove: this.canMove(squares),
-      max: this.getMax(squares)
+      canMove: canMove(squares),
+      max: getMax(squares)
     };
-  }
-
-  canMove(squares) {
-    const x = this.props.x;
-    const y = this.props.y;
-    function possibleMoveWith(i, j, value) {
-      if (i < 0 || i >= x) return false;
-      if (j < 0 || j >= y) return false;
-      if (squares[i][j].value === value) return true;
-      return false;
-    }
-
-    for (var j = 0; j < this.props.y; j++) {
-      for (var i = 0; i < this.props.x; i++) {
-        const { value } = squares[i][j];
-        if (
-          possibleMoveWith(i - 1, j, value) ||
-          possibleMoveWith(i + 1, j, value) ||
-          possibleMoveWith(i, j - 1, value) ||
-          possibleMoveWith(i, j + 1, value)
-        )
-          return true;
-      }
-    }
-    return false;
   }
 
   renderSquare(i, j) {
