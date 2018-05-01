@@ -36,7 +36,9 @@ export default class Board extends React.Component {
       return arr.slice();
     });
 
-    this.setState(this.boardState(collapse(i, j, squares)));
+    this.setState(
+      this.boardState(refill(drop(collapse(i, j, squares)), this.state.max))
+    );
   }
 
   boardState(squares) {

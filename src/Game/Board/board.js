@@ -25,6 +25,8 @@ export function getMin(squares) {
 }
 
 export function refill(squares, max) {
+  squares = JSON.parse(JSON.stringify(squares));
+
   const min = Math.max(max - 7, 1);
 
   return squares.map((arr, j) =>
@@ -32,7 +34,7 @@ export function refill(squares, max) {
       if (sq.value === null) {
         return {
           value: Math.floor(Math.random() * (max - min)) + min,
-          drop: 5 - j,
+          drop: squares[0].length - j,
           toggle: !sq.toggle
         };
       } else return sq;
@@ -41,6 +43,8 @@ export function refill(squares, max) {
 }
 
 export function killMinimum(squares) {
+  squares = JSON.parse(JSON.stringify(squares));
+
   const min = getMin(squares);
 
   return squares.map((arr, j) =>
@@ -57,6 +61,7 @@ export function killMinimum(squares) {
 }
 
 export function drop(squares) {
+  squares = JSON.parse(JSON.stringify(squares));
   for (var j = squares[0].length - 1; j >= 0; j--) {
     for (var i = 0; i < squares.length; i++) {
       if (squares[i][j].value == null) {
@@ -104,6 +109,8 @@ export function canMove(squares) {
 }
 
 export function collapse(i, j, squares) {
+  squares = JSON.parse(JSON.stringify(squares));
+
   const x = squares.length;
   const y = squares[0].length;
 
@@ -134,5 +141,5 @@ export function collapse(i, j, squares) {
     // Still have to do this, because update replaces it with null
     squares[i][j].value = value;
   }
-  return refill(drop(squares), max);
+  return squares;
 }
