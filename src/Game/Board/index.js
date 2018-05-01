@@ -2,14 +2,12 @@ import React from 'react';
 import Square from './components/Square';
 import {
   getMax,
-  getMin,
   refill,
-  killMinimum,
   drop,
   canMove,
   collapse,
   toggleChanges
-} from './board.js';
+} from './service/board.js';
 
 export default class Board extends React.Component {
   constructor(props) {
