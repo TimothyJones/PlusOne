@@ -1,4 +1,7 @@
-export function killMinimum(squares) {
+// @flow
+import type { BoardState } from './types.js';
+
+export function killMinimum(squares: BoardState): BoardState {
   squares = JSON.parse(JSON.stringify(squares));
 
   const min = getMin(squares);
@@ -16,7 +19,7 @@ export function killMinimum(squares) {
   );
 }
 
-export function getMin(squares) {
+export function getMin(squares: BoardState): number {
   return squares.reduce(function(m, arr) {
     const rowMax = arr.reduce(function(a, b) {
       if (b.value === null) {

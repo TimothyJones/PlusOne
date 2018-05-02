@@ -1,13 +1,20 @@
+// @flow
+
 import React from 'react';
 import classnames from 'classnames';
 import { CSSTransition } from 'react-transition-group';
 
-export default class Square extends React.Component {
-  constructor(props) {
+type Props = {
+  toggle: boolean,
+  drop: number,
+  style: {},
+  value: number | string,
+  onClick: () => void
+};
+
+export default class Square extends React.Component<Props> {
+  constructor(props: Props) {
     super(props);
-    this.state = {
-      in: false
-    };
   }
 
   render() {

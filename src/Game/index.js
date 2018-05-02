@@ -1,7 +1,11 @@
+// @flow
+
 import React from 'react';
 import Board from './Board';
 
-export default class Game extends React.Component {
+type Props = {};
+
+export default class Game extends React.Component<Props> {
   render() {
     return (
       <div className="game">

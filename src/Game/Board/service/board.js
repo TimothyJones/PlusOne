@@ -1,6 +1,9 @@
-import { killMinimum } from './board-private.js';
+// @flow
 
-export function getMax(squares) {
+import { killMinimum } from './board-private.js';
+import type { BoardState } from './types.js';
+
+export function getMax(squares: BoardState): number {
   return squares.reduce(function(m, arr) {
     const rowMax = arr.reduce(function(a, b) {
       if (b.value === null) {
@@ -13,7 +16,7 @@ export function getMax(squares) {
   }, 0);
 }
 
-export function refill(squares, max) {
+export function refill(squares: BoardState, max: number): BoardState {
   squares = JSON.parse(JSON.stringify(squares));
 
   const min = Math.max(max - 7, 1);
@@ -31,7 +34,7 @@ export function refill(squares, max) {
   );
 }
 
-export function drop(squares) {
+export function drop(squares: BoardState): BoardState {
   squares = JSON.parse(JSON.stringify(squares));
   for (var j = squares[0].length - 1; j >= 0; j--) {
     for (var i = 0; i < squares.length; i++) {
@@ -54,7 +57,7 @@ export function drop(squares) {
   return squares;
 }
 
-export function canMove(squares) {
+export function canMove(squares: BoardState): boolean {
   const x = squares.length;
   const y = squares[0].length;
   function possibleMoveWith(i, j, value) {
@@ -79,16 +82,19 @@ export function canMove(squares) {
   return false;
 }
 
-export function toggleChanges(oldBoard, newBoard) {
-  const squares = JSON.parse(JSON.stringify(newBoard));
+export function toggleChanges(
+  oldBoardState: BoardState,
+  newBoardState: BoardState
+): BoardState {
+  const squares = JSON.parse(JSON.stringify(newBoardState));
   const x = squares.length;
   const y = squares[0].length;
 
   for (var i = 0; i < x; i++) {
     for (var j = 0; j < y; j++) {
       if (
-        oldBoard[i][j].value != newBoard[i][j].value ||
-        newBoard[i][j].drop > 0
+        oldBoardState[i][j].value != newBoardState[i][j].value ||
+        newBoardState[i][j].drop > 0
       ) {
         squares[i][j].toggle = !squares[i][j].toggle;
       }
@@ -98,8 +104,8 @@ export function toggleChanges(oldBoard, newBoard) {
   return squares;
 }
 
-export function collapse(i, j, squares) {
-  squares = JSON.parse(JSON.stringify(squares));
+export function collapse(i: number, j: number, board: BoardState): BoardState {
+  var squares = JSON.parse(JSON.stringify(board));
 
   const x = squares.length;
   const y = squares[0].length;

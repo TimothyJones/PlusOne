@@ -1,10 +1,16 @@
+// @flow
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import Game from './Game';
 
-ReactDOM.render(<Game />, document.getElementById('root'));
+var root = document.getElementById('root');
+if (root === null) {
+  throw new Error('no root element');
+}
+ReactDOM.render(<Game />, root);
 registerServiceWorker();
 
 // ========================================

@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import Square from './components/Square';
 import {
@@ -8,9 +10,21 @@ import {
   collapse,
   toggleChanges
 } from './service/board.js';
+import type { BoardState } from './service/types.js';
 
-export default class Board extends React.Component {
-  constructor(props) {
+type Props = {
+  x: number,
+  y: number
+};
+
+type State = {
+  max: number,
+  canMove: boolean,
+  squares: BoardState
+};
+
+export default class Board extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
 
     const maxInitial = 6;
@@ -30,7 +44,7 @@ export default class Board extends React.Component {
     this.state = this.boardState(squares);
   }
 
-  handleClick(i, j) {
+  handleClick(i: number, j: number) {
     this.setState(
       this.boardState(
         toggleChanges(
@@ -41,7 +55,7 @@ export default class Board extends React.Component {
     );
   }
 
-  boardState(squares) {
+  boardState(squares: BoardState) {
     return {
       squares: squares,
       canMove: canMove(squares),
@@ -49,7 +63,7 @@ export default class Board extends React.Component {
     };
   }
 
-  renderSquare(i, j) {
+  renderSquare(i: number, j: number) {
     const x = this.props.x;
     const y = this.props.y;
     const squares = this.state.squares;
@@ -68,7 +82,7 @@ export default class Board extends React.Component {
       rightBorder: borderWith(i + 1, j),
       topBorder: borderWith(i, j - 1),
       bottomBorder: borderWith(i, j + 1),
-      ['color' + value]: true,
+      ['color' + (value === null ? '' : value)]: true,
       maxNumber: this.state.max === value
     };
 
@@ -76,7 +90,7 @@ export default class Board extends React.Component {
       <Square
         key={(j + 1) * (i + 1)}
         style={style}
-        value={value}
+        value={value === null ? 'X' : value}
         drop={drop}
         toggle={toggle}
         onClick={() => this.handleClick(i, j)}
