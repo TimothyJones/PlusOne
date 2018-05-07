@@ -3,6 +3,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import store from 'store';
+import './board.css';
 
 import Square from './components/Square';
 import {
