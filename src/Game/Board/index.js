@@ -6,6 +6,7 @@ import store from 'store';
 import './board.css';
 
 import Square from './components/Square';
+import ScoreBoard from './components/ScoreBoard';
 import {
   getMax,
   refill,
@@ -141,33 +142,16 @@ export default class Board extends React.Component<Props, State> {
       );
     }
 
-    const scoreFor = score => (
-      <span className={classnames('score', 'color' + score)}>{score}</span>
-    );
-
-    const score = this.state.canMove ? (
-      <p className="scores">Current Score: {scoreFor(this.state.max)}</p>
-    ) : (
-      <p className="scores warning">
-        No more moves! Score: {scoreFor(this.state.max)}
-      </p>
-    );
-
     return (
       <div>
         {' '}
         <div className="game-board">{rows}</div>
-        <div className="scoreboard">
-          {score}
-          <p className="text scores">
-            High Score: {scoreFor(this.state.highScore)}
-          </p>
-          <p className="scores">
-            <a href="#" onClick={() => this.reset()}>
-              reset
-            </a>
-          </p>
-        </div>
+        <ScoreBoard
+          currentScore={this.state.max}
+          highScore={this.state.highScore}
+          canMove={this.state.canMove}
+          onReset={() => this.reset()}
+        />
       </div>
     );
   }
