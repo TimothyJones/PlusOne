@@ -18,7 +18,8 @@ import type { BoardState } from './service/types.js';
 
 type Props = {
   x: number,
-  y: number
+  y: number,
+  maxInitial: number
 };
 
 type State = {
@@ -32,21 +33,29 @@ export default class Board extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    const maxInitial = 6;
+    this.state = this.boardState(this.newSquares());
+  }
 
-    const squares = Array.from(Array(props.x), () =>
-      new Array(props.y).fill(null).map(() => ({
-        value: Math.round(Math.random() * (maxInitial - 2)) + 1,
+  newSquares() {
+    const squares = Array.from(Array(this.props.x), () =>
+      new Array(this.props.y).fill(null).map(() => ({
+        value: Math.round(Math.random() * (this.props.maxInitial - 2)) + 1,
         drop: 5,
         toggle: false
       }))
     );
 
-    squares[Math.floor(Math.random() * props.x)][
-      Math.floor(Math.random() * props.y)
-    ].value = maxInitial;
+    squares[Math.floor(Math.random() * this.props.x)][
+      Math.floor(Math.random() * this.props.y)
+    ].value = this.props.maxInitial;
 
-    this.state = this.boardState(squares);
+    return squares;
+  }
+
+  reset() {
+    this.setState(
+      this.boardState(toggleChanges(this.state.squares, this.newSquares()))
+    );
   }
 
   handleClick(i: number, j: number) {
@@ -136,9 +145,9 @@ export default class Board extends React.Component<Props, State> {
     );
 
     const score = this.state.canMove ? (
-      <p className="text scores">Current Score: {scoreFor(this.state.max)}</p>
+      <p className="scores">Current Score: {scoreFor(this.state.max)}</p>
     ) : (
-      <p className="text scores warning">
+      <p className="scores warning">
         No more moves! Score: {scoreFor(this.state.max)}
       </p>
     );
@@ -151,6 +160,11 @@ export default class Board extends React.Component<Props, State> {
           {score}
           <p className="text scores">
             High Score: {scoreFor(this.state.highScore)}
+          </p>
+          <p className="scores">
+            <a href="#" onClick={() => this.reset()}>
+              reset
+            </a>
           </p>
         </div>
       </div>

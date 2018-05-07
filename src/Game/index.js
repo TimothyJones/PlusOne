@@ -10,7 +10,7 @@ export default class Game extends React.Component<Props> {
     return (
       <div className="game">
         <div>
-          <Board x={5} y={5} />
+          <Board x={5} y={5} maxInitial={6} />
         </div>
       </div>
     );

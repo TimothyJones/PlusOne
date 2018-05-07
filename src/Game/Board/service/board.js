@@ -96,7 +96,7 @@ export function toggleChanges(
         oldBoardState[i][j].value !== newBoardState[i][j].value ||
         newBoardState[i][j].drop > 0
       ) {
-        squares[i][j].toggle = !squares[i][j].toggle;
+        squares[i][j].toggle = !oldBoardState[i][j].toggle;
       }
     }
   }
