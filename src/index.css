@@ -6,6 +6,7 @@ body {
 body {
   font: 14px 'Century Gothic', Futura, sans-serif;
   margin: 20px;
+  background: #faf8ef;
 }
 
 ol,
@@ -20,7 +21,6 @@ ul {
 }
 
 .text {
-  color: #fff;
 }
 
 .status {
@@ -29,6 +29,7 @@ ul {
 
 .warning {
   color: #f44336;
+  text-align: center;
   font-weight: bold;
 }
 
@@ -252,11 +253,16 @@ button {
 .game {
   display: flex;
   flex-direction: row;
+  margin: auto;
+  width: 50%;
+  padding-top: 10%;
+  padding-left: 25%;
 }
 
 .game-board {
   background: #000;
-  border: 2px solid #000;
+  border: 5px solid #000;
+  border-radius: 6px;
 }
 
 .game-info {

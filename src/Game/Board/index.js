@@ -130,38 +130,28 @@ export default class Board extends React.Component<Props, State> {
       );
     }
 
-    const moves = this.state.canMove ? (
-      <div />
+    const scoreFor = score => (
+      <span className={classnames('score', 'color' + score)}>{score}</span>
+    );
+
+    const score = this.state.canMove ? (
+      <p className="text scores">Current Score: {scoreFor(this.state.max)}</p>
     ) : (
-      <div>
-        <p class="warning"> There are no move moves!</p>
-        <p class={'color' + this.state.max}>
-          Your score is <span>{this.state.max}</span>
-        </p>
-      </div>
+      <p className="text scores warning">
+        No more moves! Score: {scoreFor(this.state.max)}
+      </p>
     );
 
     return (
       <div>
         {' '}
+        <div className="game-board">{rows}</div>
         <div className="scoreboard">
+          {score}
           <p className="text scores">
-            High Score:{' '}
-            <span
-              className={classnames('score', 'color' + this.state.highScore)}
-            >
-              {this.state.highScore}
-            </span>
-          </p>
-          <p className="text scores">
-            Current Score:{' '}
-            <span className={classnames('score', 'color' + this.state.max)}>
-              {this.state.max}
-            </span>
+            High Score: {scoreFor(this.state.highScore)}
           </p>
         </div>
-        <div>{rows}</div>
-        {moves}
       </div>
     );
   }
