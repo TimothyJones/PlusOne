@@ -37,7 +37,7 @@ export default class Board extends React.Component<Props, State> {
     this.state = this.boardState(this.newSquares());
   }
 
-  newSquares() {
+  newSquares(): BoardState {
     const squares = Array.from(Array(this.props.x), () =>
       new Array(this.props.y).fill(null).map(() => ({
         value: Math.round(Math.random() * (this.props.maxInitial - 2)) + 1,
@@ -70,7 +70,7 @@ export default class Board extends React.Component<Props, State> {
     );
   }
 
-  determineHighScore(max) {
+  determineHighScore(max: number): number {
     const storedHighScore = store.get('highScore');
     if (storedHighScore === undefined || max > storedHighScore) {
       store.set('highScore', max);

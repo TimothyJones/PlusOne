@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default class ScoreBoard extends React.Component<Props> {
-  scoreFor(score) {
+  scoreFor(score: number) {
     return (
       <span className={classnames('score', 'color' + score)}>{score}</span>
     );
