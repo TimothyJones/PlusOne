@@ -1,17 +1,18 @@
 /* Overall style */
 .game {
-  display: flex;
+  display: block;
   flex-direction: row;
-  margin: auto;
-  width: 50%;
   padding-top: 10%;
-  padding-left: 25%;
+  width: 275px;
+  margin: auto;
+  left: 50%;
 }
 
 .game-board {
   background: #000;
   border: 5px solid #000;
   border-radius: 6px;
+  min-width: 266px;
 }
 
 .board-row:after {
