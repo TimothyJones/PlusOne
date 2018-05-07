@@ -2,6 +2,7 @@
 
 import React from 'react';
 import classnames from 'classnames';
+import store from 'store';
 
 import Square from './components/Square';
 import {
@@ -58,14 +59,23 @@ export default class Board extends React.Component<Props, State> {
     );
   }
 
+  determineHighScore(max) {
+    const storedHighScore = store.get('highScore');
+    if (storedHighScore === undefined || max > storedHighScore) {
+      store.set('highScore', max);
+    }
+    return store.get('highScore');
+  }
+
   boardState(squares: BoardState) {
     const max = getMax(squares);
+    const highScore = this.determineHighScore(max);
+
     return {
       squares: squares,
       canMove: canMove(squares),
       max: max,
-      highScore:
-        this.state !== undefined ? Math.max(this.state.highScore, max) : max
+      highScore: highScore
     };
   }
 
