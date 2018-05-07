@@ -134,8 +134,8 @@ export default class Board extends React.Component<Props, State> {
     return (
       <div>
         {' '}
-        <div class="scoreboard">
-          <p class="text scores">
+        <div className="scoreboard">
+          <p className="text scores">
             High Score:{' '}
             <span
               className={classnames('score', 'color' + this.state.highScore)}
@@ -143,7 +143,7 @@ export default class Board extends React.Component<Props, State> {
               {this.state.highScore}
             </span>
           </p>
-          <p class="text scores">
+          <p className="text scores">
             Current Score:{' '}
             <span className={classnames('score', 'color' + this.state.max)}>
               {this.state.max}

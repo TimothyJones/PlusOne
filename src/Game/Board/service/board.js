@@ -93,7 +93,7 @@ export function toggleChanges(
   for (var i = 0; i < x; i++) {
     for (var j = 0; j < y; j++) {
       if (
-        oldBoardState[i][j].value != newBoardState[i][j].value ||
+        oldBoardState[i][j].value !== newBoardState[i][j].value ||
         newBoardState[i][j].drop > 0
       ) {
         squares[i][j].toggle = !squares[i][j].toggle;
