@@ -1,4 +1,5 @@
 import {
+  stripMerge,
   getMax,
   refill,
   drop,
@@ -10,17 +11,45 @@ import {
 function createBoard() {
   return [
     [
-      { value: 1, drop: 0, toggle: true },
-      { value: 2, drop: 0, toggle: true },
-      { value: 3, drop: 0, toggle: true }
+      { value: 1, drop: 0, toggle: true, merged: false },
+      { value: 2, drop: 0, toggle: true, merged: false },
+      { value: 3, drop: 0, toggle: true, merged: false }
     ],
     [
-      { value: 4, drop: 0, toggle: true },
-      { value: 5, drop: 0, toggle: true },
-      { value: 6, drop: 0, toggle: true }
+      { value: 4, drop: 0, toggle: true, merged: false },
+      { value: 5, drop: 0, toggle: true, merged: false },
+      { value: 6, drop: 0, toggle: true, merged: false }
     ]
   ];
 }
+
+describe('stripMerge function', () => {
+  expect(
+    stripMerge([
+      [
+        { value: 1, drop: 0, toggle: true, merged: true },
+        { value: 2, drop: 0, toggle: false, merged: true },
+        { value: 3, drop: 4, toggle: true, merged: true }
+      ],
+      [
+        { value: 4, drop: 0, toggle: false, merged: true },
+        { value: 5, drop: 2, toggle: true, merged: true },
+        { value: 6, drop: 0, toggle: true, merged: true }
+      ]
+    ])
+  ).toEqual([
+    [
+      { value: 1, drop: 0, toggle: true, merged: false },
+      { value: 2, drop: 0, toggle: false, merged: false },
+      { value: 3, drop: 4, toggle: true, merged: false }
+    ],
+    [
+      { value: 4, drop: 0, toggle: false, merged: false },
+      { value: 5, drop: 2, toggle: true, merged: false },
+      { value: 6, drop: 0, toggle: true, merged: false }
+    ]
+  ]);
+});
 
 describe('getMax function', () => {
   var board;
@@ -63,14 +92,14 @@ describe('refill function', () => {
     const filled = refill(
       [
         [
-          { value: null, drop: 0, toggle: true },
-          { value: null, drop: 0, toggle: true },
-          { value: null, drop: 0, toggle: true }
+          { value: null, drop: 0, toggle: true, merged: false },
+          { value: null, drop: 0, toggle: true, merged: false },
+          { value: null, drop: 0, toggle: true, merged: false }
         ],
         [
-          { value: null, drop: 0, toggle: true },
-          { value: null, drop: 0, toggle: true },
-          { value: null, drop: 0, toggle: true }
+          { value: null, drop: 0, toggle: true, merged: false },
+          { value: null, drop: 0, toggle: true, merged: false },
+          { value: null, drop: 0, toggle: true, merged: false }
         ]
       ],
       10
@@ -87,25 +116,30 @@ describe('refill function', () => {
     const filled = refill(
       [
         [
-          { value: null, drop: 0, toggle: true },
-          { value: null, drop: 0, toggle: true },
-          { value: 2, drop: 0, toggle: true }
+          { value: null, drop: 0, toggle: true, merged: false },
+          { value: null, drop: 0, toggle: true, merged: false },
+          { value: 2, drop: 0, toggle: true, merged: false }
         ],
         [
-          { value: 3, drop: 0, toggle: true },
-          { value: 4, drop: 0, toggle: true },
-          { value: 5, drop: 0, toggle: true }
+          { value: 3, drop: 0, toggle: true, merged: false },
+          { value: 4, drop: 0, toggle: true, merged: false },
+          { value: 5, drop: 0, toggle: true, merged: false }
         ]
       ],
       10
     );
     check(filled[0][0]);
     check(filled[0][1]);
-    expect(filled[0][2]).toEqual({ value: 2, drop: 0, toggle: true });
+    expect(filled[0][2]).toEqual({
+      value: 2,
+      drop: 0,
+      toggle: true,
+      merged: false
+    });
     expect(filled[1]).toEqual([
-      { value: 3, drop: 0, toggle: true },
-      { value: 4, drop: 0, toggle: true },
-      { value: 5, drop: 0, toggle: true }
+      { value: 3, drop: 0, toggle: true, merged: false },
+      { value: 4, drop: 0, toggle: true, merged: false },
+      { value: 5, drop: 0, toggle: true, merged: false }
     ]);
   });
 });
@@ -114,14 +148,14 @@ describe('drop function ', () => {
   test('No empty cells', () => {
     const board = [
       [
-        { value: 1, drop: 0, toggle: true },
-        { value: 2, drop: 0, toggle: true },
-        { value: 3, drop: 0, toggle: true }
+        { value: 1, drop: 0, toggle: true, merged: false },
+        { value: 2, drop: 0, toggle: true, merged: false },
+        { value: 3, drop: 0, toggle: true, merged: false }
       ],
       [
-        { value: 4, drop: 0, toggle: true },
-        { value: 5, drop: 0, toggle: true },
-        { value: 6, drop: 0, toggle: true }
+        { value: 4, drop: 0, toggle: true, merged: false },
+        { value: 5, drop: 0, toggle: true, merged: false },
+        { value: 6, drop: 0, toggle: true, merged: false }
       ]
     ];
 
@@ -132,14 +166,14 @@ describe('drop function ', () => {
   test('No drop', () => {
     const board = [
       [
-        { value: null, drop: 0, toggle: true },
-        { value: null, drop: 0, toggle: true },
-        { value: 2, drop: 0, toggle: true }
+        { value: null, drop: 0, toggle: true, merged: false },
+        { value: null, drop: 0, toggle: true, merged: false },
+        { value: 2, drop: 0, toggle: true, merged: false }
       ],
       [
-        { value: 2, drop: 0, toggle: true },
-        { value: 2, drop: 0, toggle: true },
-        { value: 2, drop: 0, toggle: true }
+        { value: 2, drop: 0, toggle: true, merged: false },
+        { value: 2, drop: 0, toggle: true, merged: false },
+        { value: 2, drop: 0, toggle: true, merged: false }
       ]
     ];
 
@@ -150,28 +184,28 @@ describe('drop function ', () => {
   test('Some drop', () => {
     const board = [
       [
-        { value: 2, drop: 0, toggle: true },
-        { value: null, drop: 0, toggle: true },
-        { value: 2, drop: 0, toggle: true }
+        { value: 2, drop: 0, toggle: true, merged: true },
+        { value: null, drop: 0, toggle: true, merged: false },
+        { value: 2, drop: 0, toggle: true, merged: false }
       ],
       [
-        { value: null, drop: 0, toggle: true },
-        { value: 2, drop: 0, toggle: true },
-        { value: null, drop: 0, toggle: true }
+        { value: null, drop: 0, toggle: true, merged: false },
+        { value: 2, drop: 0, toggle: true, merged: false },
+        { value: null, drop: 0, toggle: true, merged: false }
       ]
     ];
 
     const newBoard = drop(board);
     expect(newBoard).toEqual([
       [
-        { value: null, drop: 0, toggle: true },
-        { value: 2, drop: 1, toggle: true },
-        { value: 2, drop: 0, toggle: true }
+        { value: null, drop: 0, toggle: true, merged: false },
+        { value: 2, drop: 1, toggle: true, merged: true },
+        { value: 2, drop: 0, toggle: true, merged: false }
       ],
       [
-        { value: null, drop: 0, toggle: true },
-        { value: null, drop: 0, toggle: true },
-        { value: 2, drop: 1, toggle: true }
+        { value: null, drop: 0, toggle: true, merged: false },
+        { value: null, drop: 0, toggle: true, merged: false },
+        { value: 2, drop: 1, toggle: true, merged: false }
       ]
     ]);
   });
@@ -182,14 +216,14 @@ describe('can move function ', () => {
     expect(
       canMove([
         [
-          { value: 2, drop: 0, toggle: true },
-          { value: 1, drop: 0, toggle: true },
-          { value: 2, drop: 0, toggle: true }
+          { value: 2, drop: 0, toggle: true, merged: false },
+          { value: 1, drop: 0, toggle: true, merged: false },
+          { value: 2, drop: 0, toggle: true, merged: false }
         ],
         [
-          { value: 1, drop: 0, toggle: true },
-          { value: 2, drop: 0, toggle: true },
-          { value: 1, drop: 0, toggle: true }
+          { value: 1, drop: 0, toggle: true, merged: false },
+          { value: 2, drop: 0, toggle: true, merged: false },
+          { value: 1, drop: 0, toggle: true, merged: false }
         ]
       ])
     ).toEqual(false);
@@ -199,14 +233,14 @@ describe('can move function ', () => {
     expect(
       canMove([
         [
-          { value: 3, drop: 0, toggle: true },
-          { value: 3, drop: 0, toggle: true },
-          { value: 2, drop: 0, toggle: true }
+          { value: 3, drop: 0, toggle: true, merged: false },
+          { value: 3, drop: 0, toggle: true, merged: false },
+          { value: 2, drop: 0, toggle: true, merged: false }
         ],
         [
-          { value: 1, drop: 0, toggle: true },
-          { value: 2, drop: 0, toggle: true },
-          { value: 1, drop: 0, toggle: true }
+          { value: 1, drop: 0, toggle: true, merged: false },
+          { value: 2, drop: 0, toggle: true, merged: false },
+          { value: 1, drop: 0, toggle: true, merged: false }
         ]
       ])
     ).toEqual(true);
@@ -216,14 +250,14 @@ describe('can move function ', () => {
     expect(
       canMove([
         [
-          { value: 2, drop: 0, toggle: true },
-          { value: 1, drop: 0, toggle: true },
-          { value: 3, drop: 0, toggle: true }
+          { value: 2, drop: 0, toggle: true, merged: false },
+          { value: 1, drop: 0, toggle: true, merged: false },
+          { value: 3, drop: 0, toggle: true, merged: false }
         ],
         [
-          { value: 1, drop: 0, toggle: true },
-          { value: 2, drop: 0, toggle: true },
-          { value: 3, drop: 0, toggle: true }
+          { value: 1, drop: 0, toggle: true, merged: false },
+          { value: 2, drop: 0, toggle: true, merged: false },
+          { value: 3, drop: 0, toggle: true, merged: false }
         ]
       ])
     ).toEqual(true);
@@ -235,26 +269,26 @@ describe('collapse function', () => {
     expect(
       collapse(0, 0, [
         [
-          { value: 3, drop: 0, toggle: true },
-          { value: 3, drop: 0, toggle: true },
-          { value: 5, drop: 0, toggle: true }
+          { value: 3, drop: 0, toggle: true, merged: false },
+          { value: 3, drop: 0, toggle: true, merged: false },
+          { value: 5, drop: 0, toggle: true, merged: false }
         ],
         [
-          { value: 3, drop: 0, toggle: true },
-          { value: 2, drop: 0, toggle: true },
-          { value: 3, drop: 0, toggle: true }
+          { value: 3, drop: 0, toggle: true, merged: false },
+          { value: 2, drop: 0, toggle: true, merged: false },
+          { value: 3, drop: 0, toggle: true, merged: false }
         ]
       ])
     ).toEqual([
       [
-        { value: 4, drop: 0, toggle: true },
-        { value: null, drop: 0, toggle: true },
-        { value: 5, drop: 0, toggle: true }
+        { value: 4, drop: 0, toggle: true, merged: true },
+        { value: null, drop: 0, toggle: true, merged: false },
+        { value: 5, drop: 0, toggle: true, merged: false }
       ],
       [
-        { value: null, drop: 0, toggle: true },
-        { value: 2, drop: 0, toggle: true },
-        { value: 3, drop: 0, toggle: true }
+        { value: null, drop: 0, toggle: true, merged: false },
+        { value: 2, drop: 0, toggle: true, merged: false },
+        { value: 3, drop: 0, toggle: true, merged: false }
       ]
     ]);
   });
@@ -263,26 +297,26 @@ describe('collapse function', () => {
     expect(
       collapse(0, 0, [
         [
-          { value: 3, drop: 0, toggle: true },
-          { value: 3, drop: 0, toggle: true },
-          { value: 1, drop: 0, toggle: true }
+          { value: 3, drop: 0, toggle: true, merged: false },
+          { value: 3, drop: 0, toggle: true, merged: false },
+          { value: 1, drop: 0, toggle: true, merged: false }
         ],
         [
-          { value: 3, drop: 0, toggle: true },
-          { value: 2, drop: 0, toggle: true },
-          { value: 3, drop: 0, toggle: true }
+          { value: 3, drop: 0, toggle: true, merged: false },
+          { value: 2, drop: 0, toggle: true, merged: false },
+          { value: 3, drop: 0, toggle: true, merged: false }
         ]
       ])
     ).toEqual([
       [
-        { value: 4, drop: 0, toggle: true },
-        { value: null, drop: 0, toggle: true },
-        { value: null, drop: 0, toggle: true }
+        { value: 4, drop: 0, toggle: true, merged: true },
+        { value: null, drop: 0, toggle: true, merged: false },
+        { value: null, drop: 0, toggle: true, merged: false }
       ],
       [
-        { value: null, drop: 0, toggle: true },
-        { value: 2, drop: 0, toggle: true },
-        { value: 3, drop: 0, toggle: true }
+        { value: null, drop: 0, toggle: true, merged: false },
+        { value: 2, drop: 0, toggle: true, merged: false },
+        { value: 3, drop: 0, toggle: true, merged: false }
       ]
     ]);
   });
@@ -291,26 +325,26 @@ describe('collapse function', () => {
     expect(
       collapse(0, 2, [
         [
-          { value: 3, drop: 0, toggle: true },
-          { value: 3, drop: 0, toggle: true },
-          { value: 1, drop: 0, toggle: true }
+          { value: 3, drop: 0, toggle: true, merged: false },
+          { value: 3, drop: 0, toggle: true, merged: false },
+          { value: 1, drop: 0, toggle: true, merged: false }
         ],
         [
-          { value: 3, drop: 0, toggle: true },
-          { value: 2, drop: 0, toggle: true },
-          { value: 3, drop: 0, toggle: true }
+          { value: 3, drop: 0, toggle: true, merged: false },
+          { value: 2, drop: 0, toggle: true, merged: false },
+          { value: 3, drop: 0, toggle: true, merged: false }
         ]
       ])
     ).toEqual([
       [
-        { value: 3, drop: 0, toggle: true },
-        { value: 3, drop: 0, toggle: true },
-        { value: 1, drop: 0, toggle: true }
+        { value: 3, drop: 0, toggle: true, merged: false },
+        { value: 3, drop: 0, toggle: true, merged: false },
+        { value: 1, drop: 0, toggle: true, merged: false }
       ],
       [
-        { value: 3, drop: 0, toggle: true },
-        { value: 2, drop: 0, toggle: true },
-        { value: 3, drop: 0, toggle: true }
+        { value: 3, drop: 0, toggle: true, merged: false },
+        { value: 2, drop: 0, toggle: true, merged: false },
+        { value: 3, drop: 0, toggle: true, merged: false }
       ]
     ]);
   });
@@ -322,39 +356,39 @@ describe('toggleChanges function', () => {
       toggleChanges(
         [
           [
-            { value: 3, drop: 0, toggle: true },
-            { value: 3, drop: 0, toggle: true },
-            { value: 1, drop: 0, toggle: true }
+            { value: 3, drop: 0, toggle: true, merged: false },
+            { value: 3, drop: 0, toggle: true, merged: false },
+            { value: 1, drop: 0, toggle: true, merged: false }
           ],
           [
-            { value: 3, drop: 0, toggle: true },
-            { value: 2, drop: 0, toggle: true },
-            { value: 3, drop: 0, toggle: true }
+            { value: 3, drop: 0, toggle: true, merged: false },
+            { value: 2, drop: 0, toggle: true, merged: false },
+            { value: 3, drop: 0, toggle: true, merged: false }
           ]
         ],
         [
           [
-            { value: 4, drop: 3, toggle: true },
-            { value: 1, drop: 3, toggle: true },
-            { value: 2, drop: 3, toggle: true }
+            { value: 4, drop: 3, toggle: true, merged: false },
+            { value: 1, drop: 3, toggle: true, merged: false },
+            { value: 2, drop: 3, toggle: true, merged: false }
           ],
           [
-            { value: 4, drop: 1, toggle: true },
-            { value: 2, drop: 0, toggle: true },
-            { value: 3, drop: 0, toggle: true }
+            { value: 4, drop: 1, toggle: true, merged: false },
+            { value: 2, drop: 0, toggle: true, merged: false },
+            { value: 3, drop: 0, toggle: true, merged: false }
           ]
         ]
       )
     ).toEqual([
       [
-        { value: 4, drop: 3, toggle: false },
-        { value: 1, drop: 3, toggle: false },
-        { value: 2, drop: 3, toggle: false }
+        { value: 4, drop: 3, toggle: false, merged: false },
+        { value: 1, drop: 3, toggle: false, merged: false },
+        { value: 2, drop: 3, toggle: false, merged: false }
       ],
       [
-        { value: 4, drop: 1, toggle: false },
-        { value: 2, drop: 0, toggle: true },
-        { value: 3, drop: 0, toggle: true }
+        { value: 4, drop: 1, toggle: false, merged: false },
+        { value: 2, drop: 0, toggle: true, merged: false },
+        { value: 3, drop: 0, toggle: true, merged: false }
       ]
     ]);
   });
@@ -363,39 +397,39 @@ describe('toggleChanges function', () => {
       toggleChanges(
         [
           [
-            { value: 3, drop: 0, toggle: true },
-            { value: 3, drop: 0, toggle: true },
-            { value: 1, drop: 0, toggle: true }
+            { value: 3, drop: 0, toggle: true, merged: false },
+            { value: 3, drop: 0, toggle: true, merged: false },
+            { value: 1, drop: 0, toggle: true, merged: false }
           ],
           [
-            { value: 3, drop: 0, toggle: true },
-            { value: 2, drop: 0, toggle: true },
-            { value: 3, drop: 0, toggle: true }
+            { value: 3, drop: 0, toggle: true, merged: false },
+            { value: 2, drop: 0, toggle: true, merged: false },
+            { value: 3, drop: 0, toggle: true, merged: false }
           ]
         ],
         [
           [
-            { value: 4, drop: 3, toggle: true },
-            { value: 1, drop: 3, toggle: true },
-            { value: 2, drop: 3, toggle: true }
+            { value: 4, drop: 3, toggle: true, merged: false },
+            { value: 1, drop: 3, toggle: true, merged: false },
+            { value: 2, drop: 3, toggle: true, merged: false }
           ],
           [
-            { value: 4, drop: 0, toggle: true },
-            { value: 2, drop: 0, toggle: true },
-            { value: 3, drop: 0, toggle: true }
+            { value: 4, drop: 0, toggle: true, merged: false },
+            { value: 2, drop: 0, toggle: true, merged: false },
+            { value: 3, drop: 0, toggle: true, merged: false }
           ]
         ]
       )
     ).toEqual([
       [
-        { value: 4, drop: 3, toggle: false },
-        { value: 1, drop: 3, toggle: false },
-        { value: 2, drop: 3, toggle: false }
+        { value: 4, drop: 3, toggle: false, merged: false },
+        { value: 1, drop: 3, toggle: false, merged: false },
+        { value: 2, drop: 3, toggle: false, merged: false }
       ],
       [
-        { value: 4, drop: 0, toggle: false },
-        { value: 2, drop: 0, toggle: true },
-        { value: 3, drop: 0, toggle: true }
+        { value: 4, drop: 0, toggle: false, merged: false },
+        { value: 2, drop: 0, toggle: true, merged: false },
+        { value: 3, drop: 0, toggle: true, merged: false }
       ]
     ]);
   });

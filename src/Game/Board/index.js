@@ -42,7 +42,8 @@ export default class Board extends React.Component<Props, State> {
       new Array(this.props.y).fill(null).map(() => ({
         value: Math.round(Math.random() * (this.props.maxInitial - 2)) + 1,
         drop: 5,
-        toggle: false
+        toggle: false,
+        merged: false
       }))
     );
 
@@ -95,7 +96,7 @@ export default class Board extends React.Component<Props, State> {
     const y = this.props.y;
     const squares = this.state.squares;
 
-    const { value, drop, toggle } = squares[i][j];
+    const { value, drop, toggle, merged } = squares[i][j];
 
     function borderWith(i, j) {
       if (i < 0 || i >= x) return true;
@@ -112,6 +113,7 @@ export default class Board extends React.Component<Props, State> {
       topBorder: borderWith(i, j - 1),
       noTopBorder: !borderWith(i, j - 1),
       bottomBorder: borderWith(i, j + 1),
+      merged: merged,
       ['color' + (value === null ? '' : value)]: true,
       maxNumber: this.state.max === value
     };

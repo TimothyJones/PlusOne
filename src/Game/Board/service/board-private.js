@@ -12,7 +12,8 @@ export function killMinimum(squares: BoardState): BoardState {
         return {
           value: null,
           drop: sq.drop,
-          toggle: sq.toggle
+          toggle: sq.toggle,
+          merged: false
         };
       } else return sq;
     })

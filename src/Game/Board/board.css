@@ -103,6 +103,10 @@ button {
   transition: transform 300ms ease-in;
 }
 
+.merged {
+  transition: transform 300ms ease-in, background 300ms ease-in;
+}
+
 .square:focus {
   outline: none;
 }
@@ -116,12 +120,26 @@ button {
 .drop1-exit {
   transform: translate(0px, 0px);
 }
+
 .drop1-enter,
 .drop2-enter,
 .drop3-enter,
 .drop4-enter,
 .drop5-enter {
   transform: translate(0px, 0px);
+}
+
+.drop1-enter-active.merged,
+.drop1-exit-active.merged,
+.drop2-enter-active.merged,
+.drop2-exit-active.merged,
+.drop3-enter-active.merged,
+.drop3-exit-active.merged,
+.drop4-enter-active.merged,
+.drop4-exit-active.merged,
+.drop5-enter-active.merged,
+.drop5-exit-active.merged {
+  transition: translate 0ms, background 300ms ease-in;
 }
 
 .drop1-enter-active,

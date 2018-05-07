@@ -27,7 +27,8 @@ export function refill(squares: BoardState, max: number): BoardState {
         return {
           value: Math.floor(Math.random() * (max - min)) + min,
           drop: squares[0].length - j,
-          toggle: sq.toggle
+          toggle: sq.toggle,
+          merged: false
         };
       } else return sq;
     })
@@ -45,8 +46,10 @@ export function drop(squares: BoardState): BoardState {
           squares[i][j] = {
             value: squares[i][next].value,
             drop: j - next,
-            toggle: squares[i][j].toggle
+            toggle: squares[i][j].toggle,
+            merged: squares[i][next].merged
           };
+          squares[i][next].merged = false;
           squares[i][next].value = null;
         }
       } else {
@@ -104,8 +107,20 @@ export function toggleChanges(
   return squares;
 }
 
+export function stripMerge(board: BoardState) {
+  const squares = JSON.parse(JSON.stringify(board));
+  const x = squares.length;
+  const y = squares[0].length;
+  for (var i = 0; i < x; i++) {
+    for (var j = 0; j < y; j++) {
+      squares[i][j].merged = false;
+    }
+  }
+  return squares;
+}
+
 export function collapse(i: number, j: number, board: BoardState): BoardState {
-  var squares = JSON.parse(JSON.stringify(board));
+  var squares = stripMerge(JSON.parse(JSON.stringify(board)));
 
   const x = squares.length;
   const y = squares[0].length;
@@ -130,6 +145,7 @@ export function collapse(i: number, j: number, board: BoardState): BoardState {
   }
   if (update(i, j) > 1) {
     squares[i][j].value = value + 1;
+    squares[i][j].merged = true;
     if (squares[i][j].value > max) {
       squares = killMinimum(squares);
     }
