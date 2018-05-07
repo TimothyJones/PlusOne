@@ -107,6 +107,7 @@ export default class Board extends React.Component<Props, State> {
       leftBorder: borderWith(i - 1, j),
       noLeftBorder: !borderWith(i - 1, j),
       rightBorder: borderWith(i + 1, j),
+      noRightBorder: !borderWith(i + 1, j),
       topBorder: borderWith(i, j - 1),
       noTopBorder: !borderWith(i, j - 1),
       bottomBorder: borderWith(i, j + 1),

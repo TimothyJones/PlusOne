@@ -63,11 +63,15 @@
 }
 
 .noTopBorder {
-  padding-top: 2px;
+  padding-top: 2px !important;
 }
 
 .noLeftBorder {
-  padding-left: 2px;
+  padding-left: 2px !important;
+}
+
+.noRightBorder {
+  padding-right: 2px !important;
 }
 
 .bottomBorder {
