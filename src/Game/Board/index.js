@@ -1,6 +1,8 @@
 // @flow
 
 import React from 'react';
+import classnames from 'classnames';
+
 import Square from './components/Square';
 import {
   getMax,
@@ -19,6 +21,7 @@ type Props = {
 
 type State = {
   max: number,
+  highScore: number,
   canMove: boolean,
   squares: BoardState
 };
@@ -56,10 +59,13 @@ export default class Board extends React.Component<Props, State> {
   }
 
   boardState(squares: BoardState) {
+    const max = getMax(squares);
     return {
       squares: squares,
       canMove: canMove(squares),
-      max: getMax(squares)
+      max: max,
+      highScore:
+        this.state !== undefined ? Math.max(this.state.highScore, max) : max
     };
   }
 
@@ -79,8 +85,10 @@ export default class Board extends React.Component<Props, State> {
 
     const style = {
       leftBorder: borderWith(i - 1, j),
+      noLeftBorder: !borderWith(i - 1, j),
       rightBorder: borderWith(i + 1, j),
       topBorder: borderWith(i, j - 1),
+      noTopBorder: !borderWith(i, j - 1),
       bottomBorder: borderWith(i, j + 1),
       ['color' + (value === null ? '' : value)]: true,
       maxNumber: this.state.max === value
@@ -125,6 +133,23 @@ export default class Board extends React.Component<Props, State> {
 
     return (
       <div>
+        {' '}
+        <div class="scoreboard">
+          <p class="text scores">
+            High Score:{' '}
+            <span
+              className={classnames('score', 'color' + this.state.highScore)}
+            >
+              {this.state.highScore}
+            </span>
+          </p>
+          <p class="text scores">
+            Current Score:{' '}
+            <span className={classnames('score', 'color' + this.state.max)}>
+              {this.state.max}
+            </span>
+          </p>
+        </div>
         <div>{rows}</div>
         {moves}
       </div>
