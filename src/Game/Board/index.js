@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import classnames from 'classnames';
 import store from 'store';
 import './board.css';
 

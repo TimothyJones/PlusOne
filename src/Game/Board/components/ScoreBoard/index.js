@@ -35,9 +35,7 @@ export default class ScoreBoard extends React.Component<Props> {
           High Score: {this.scoreFor(this.props.highScore)}
         </p>
         <p className="scores">
-          <a href="#" onClick={() => this.props.onReset()}>
-            reset
-          </a>
+          <button onClick={() => this.props.onReset()}>reset</button>
         </p>
       </div>
     );
