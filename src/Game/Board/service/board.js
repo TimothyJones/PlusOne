@@ -1,6 +1,6 @@
 // @flow
 
-import { killMinimum } from './board-private.js';
+import { killMinimum, getMin } from './board-private.js';
 import type { BoardState } from './types.js';
 
 export function getMax(squares: BoardState): number {
@@ -19,7 +19,7 @@ export function getMax(squares: BoardState): number {
 export function refill(squares: BoardState, max: number): BoardState {
   squares = JSON.parse(JSON.stringify(squares));
 
-  const min = Math.max(max - 7, 1);
+  const min = Math.min(Math.max(max - 7, 1), getMin(squares));
 
   return squares.map((arr, j) =>
     arr.map(sq => {
