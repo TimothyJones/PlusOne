@@ -2,6 +2,7 @@
 
 import React from 'react';
 import store from 'store';
+
 import './board.css';
 
 import Square from './components/Square';
@@ -71,8 +72,12 @@ export default class Board extends React.Component<Props, State> {
   }
 
   determineHighScore(max: number): number {
-    const storedHighScore = store.get('highScore');
-    if (storedHighScore === undefined || max > storedHighScore) {
+    const storedHighScore: ?number = store.get('highScore');
+    if (
+      storedHighScore === undefined ||
+      storedHighScore === null ||
+      max > storedHighScore
+    ) {
       store.set('highScore', max);
     }
     return store.get('highScore');

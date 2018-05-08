@@ -16,8 +16,8 @@ export function getMax(squares: BoardState): number {
   }, 0);
 }
 
-export function refill(squares: BoardState, max: number): BoardState {
-  squares = JSON.parse(JSON.stringify(squares));
+export function refill(board: BoardState, max: number): BoardState {
+  const squares: BoardState = JSON.parse(JSON.stringify(board));
 
   const min = Math.min(Math.max(max - 7, 1), getMin(squares));
 
@@ -35,8 +35,8 @@ export function refill(squares: BoardState, max: number): BoardState {
   );
 }
 
-export function drop(squares: BoardState): BoardState {
-  squares = JSON.parse(JSON.stringify(squares));
+export function drop(board: BoardState): BoardState {
+  const squares: BoardState = JSON.parse(JSON.stringify(board));
   for (var j = squares[0].length - 1; j >= 0; j--) {
     for (var i = 0; i < squares.length; i++) {
       if (squares[i][j].value == null) {
@@ -89,7 +89,7 @@ export function toggleChanges(
   oldBoardState: BoardState,
   newBoardState: BoardState
 ): BoardState {
-  const squares = JSON.parse(JSON.stringify(newBoardState));
+  const squares: BoardState = JSON.parse(JSON.stringify(newBoardState));
   const x = squares.length;
   const y = squares[0].length;
 
@@ -108,7 +108,7 @@ export function toggleChanges(
 }
 
 export function stripMerge(board: BoardState) {
-  const squares = JSON.parse(JSON.stringify(board));
+  const squares: BoardState = JSON.parse(JSON.stringify(board));
   const x = squares.length;
   const y = squares[0].length;
   for (var i = 0; i < x; i++) {
@@ -120,7 +120,7 @@ export function stripMerge(board: BoardState) {
 }
 
 export function collapse(i: number, j: number, board: BoardState): BoardState {
-  var squares = stripMerge(JSON.parse(JSON.stringify(board)));
+  const squares: BoardState = stripMerge(JSON.parse(JSON.stringify(board)));
 
   const x = squares.length;
   const y = squares[0].length;
@@ -147,7 +147,7 @@ export function collapse(i: number, j: number, board: BoardState): BoardState {
     squares[i][j].value = value + 1;
     squares[i][j].merged = true;
     if (squares[i][j].value > max) {
-      squares = killMinimum(squares);
+      return killMinimum(squares);
     }
   } else {
     // Still have to do this, because update replaces it with null
