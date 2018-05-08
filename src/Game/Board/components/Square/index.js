@@ -4,6 +4,8 @@ import React from 'react';
 import classnames from 'classnames';
 import { CSSTransition } from 'react-transition-group';
 
+import './square.css';
+
 type Props = {
   toggle: boolean,
   drop: number,

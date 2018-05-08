@@ -1,6 +1,8 @@
 // @flow
 
 import React from 'react';
+
+import './game.css';
 import Board from './Board';
 import Instructions from './Instructions';
 

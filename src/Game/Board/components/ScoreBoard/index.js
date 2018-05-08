@@ -3,6 +3,8 @@
 import React from 'react';
 import classnames from 'classnames';
 
+import './scoreboard.css';
+
 type Props = {
   highScore: number,
   currentScore: number,

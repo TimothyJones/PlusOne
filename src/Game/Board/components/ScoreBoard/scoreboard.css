@@ -1,0 +1,25 @@
+/* Score board and info */
+.warning {
+  color: #f44336;
+  text-align: center;
+  font-weight: bold;
+}
+
+.score {
+  border: 2px solid #222 !important;
+  color: #000;
+  font-family: system-ui;
+  border-radius: 25%;
+  padding: 4px;
+}
+
+.scores {
+  float: right;
+  clear: right;
+}
+
+.scoreboard::after {
+  content: '';
+  display: block;
+  clear: both;
+}
