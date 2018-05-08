@@ -9,7 +9,7 @@ export default class ScoreBoard extends React.Component<Props> {
     return (
       <div>
         <h1>PlusOne</h1>
-        <p>Your score is the highest number on the board.</p>
+        <p>Your score is the highest number in the square.</p>
         <p>
           You can merge cells that share the same number as long as they're
           touching. Merged cells increase their number by one.

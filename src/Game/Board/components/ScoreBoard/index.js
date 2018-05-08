@@ -22,7 +22,7 @@ export default class ScoreBoard extends React.Component<Props> {
   render() {
     const score = this.props.canMove ? (
       <p className="scores">
-        Current Score: {this.scoreFor(this.props.currentScore)}
+        Current score: {this.scoreFor(this.props.currentScore)}
       </p>
     ) : (
       <p className="scores warning">
@@ -34,7 +34,7 @@ export default class ScoreBoard extends React.Component<Props> {
       <div className="scoreboard">
         {score}
         <p className="text scores">
-          High Score: {this.scoreFor(this.props.highScore)}
+          Your high score: {this.scoreFor(this.props.highScore)}
         </p>
         <p className="scores">
           <button onClick={() => this.props.onReset()}>reset</button>
