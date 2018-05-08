@@ -13,7 +13,6 @@ import {
   FacebookShareCount,
   RedditShareCount
 } from 'react-share';
-import type from 'react-share';
 
 import './sharecount.css';
 
