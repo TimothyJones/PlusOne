@@ -1,0 +1,17 @@
+.shareButton {
+  float: left;
+  padding-right: 10px;
+}
+
+.shareCount {
+  padding-top: 0px;
+  margin-top: 0px;
+  text-align: center;
+}
+
+.shareHeader {
+  padding-top: 0px;
+  margin-top: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
