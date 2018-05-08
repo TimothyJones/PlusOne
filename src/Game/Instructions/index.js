@@ -9,14 +9,14 @@ export default class ScoreBoard extends React.Component<Props> {
     return (
       <div>
         <h1>PlusOne</h1>
-        <p>Make the highest number you can!</p>
+        <p>Your score is the highest number on the board.</p>
         <p>
-          You can collapse connected cells that have the same value. Collapsed
-          cells increase value by one.
+          You can merge cells that share the same number as long as they're
+          touching. Merged cells increase their number by one.
         </p>
         <p>
-          The highest value cell is white. Each time you merge white cells, the
-          lowest value cells also fall off the board.
+          The highest numbered cell is white. Each time you merge white cells,
+          the lowest numbered cells also fall off the board.
         </p>
         <p>Good luck!</p>
       </div>
