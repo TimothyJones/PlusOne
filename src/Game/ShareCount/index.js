@@ -27,9 +27,13 @@ export default class ScoreBoard extends React.Component<Props> {
           <span className="shareButton">
             <FacebookIcon size={44} round={true} />
             <FacebookShareCount url={this.props.url}>
-              {(shareCount: string) => (
-                <p className="shareCount">{shareCount}</p>
-              )}
+              {(shareCount: string) =>
+                shareCount != '0' ? (
+                  <p className="shareCount">{shareCount}</p>
+                ) : (
+                  <p />
+                )
+              }
             </FacebookShareCount>
           </span>
         </FacebookShareButton>
@@ -42,9 +46,13 @@ export default class ScoreBoard extends React.Component<Props> {
           <span className="shareButton">
             <RedditIcon size={44} round={true} />
             <RedditShareCount url={this.props.url}>
-              {(shareCount: string) => (
-                <p className="shareCount">{shareCount}</p>
-              )}
+              {(shareCount: string) =>
+                shareCount != '0' ? (
+                  <p className="shareCount">{shareCount}</p>
+                ) : (
+                  <p />
+                )
+              }
             </RedditShareCount>
           </span>
         </RedditShareButton>
