@@ -1,6 +1,7 @@
 {
-  "name": "14",
+  "name": "PlusOne",
   "version": "0.1.0",
+  "homepage": "http://timothyjones.github.io/PlusOne",
   "private": true,
   "dependencies": {
     "classnames": "^2.2.5",
@@ -15,6 +16,7 @@
     "babel-cli": "^6.26.0",
     "babel-preset-flow": "^6.23.0",
     "flow-bin": "^0.71.0",
+    "gh-pages": "^1.1.0",
     "react-scripts": "1.1.4"
   },
   "scripts": {
@@ -22,6 +24,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "flow": "flow"
   }
 }
