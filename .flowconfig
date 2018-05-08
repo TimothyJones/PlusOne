@@ -1,8 +1,10 @@
 [ignore]
+src/registerServiceWorker.js
 
 [include]
 
 [libs]
+flow-typed/
 
 [lints]
 
