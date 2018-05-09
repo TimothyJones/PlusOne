@@ -14,8 +14,8 @@ import {
   canMove,
   collapse,
   toggleChanges
-} from './service/board.js';
-import type { BoardState } from './service/types.js';
+} from './service/board';
+import type { BoardState } from './service/board';
 
 type Props = {
   x: number,

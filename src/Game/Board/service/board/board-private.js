@@ -1,5 +1,5 @@
 // @flow
-import type { BoardState } from './types.js';
+import type { BoardState } from './index.js';
 
 export function killMinimum(squares: BoardState): BoardState {
   squares = JSON.parse(JSON.stringify(squares));

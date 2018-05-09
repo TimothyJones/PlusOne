@@ -1,7 +1,15 @@
 // @flow
 
 import { killMinimum, getMin } from './board-private.js';
-import type { BoardState } from './types.js';
+
+type SquareState = {
+  value: number | null,
+  drop: number,
+  toggle: boolean,
+  merged: boolean
+};
+
+export type BoardState = Array<Array<SquareState>>;
 
 export function getMax(squares: BoardState): number {
   return squares.reduce(function(m, arr) {

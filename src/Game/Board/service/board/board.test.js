@@ -6,7 +6,7 @@ import {
   canMove,
   collapse,
   toggleChanges
-} from './board.js';
+} from './index.js';
 
 function createBoard() {
   return [
