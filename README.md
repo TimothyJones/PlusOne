@@ -20,6 +20,6 @@ Written in [React](https://reactjs.org/), as a practice project. It includes / u
 
 * Unit tests for the game functions with [Jest](https://facebook.github.io/jest/)
 * Browser local storage provided with [store.js](https://github.com/marcuswestin/store.js/)
-* CSS transitions / animations provided with [react-transition-group](https://reactcommunity.org/react-transition-group/css-transition)
+* CSS transitions / animations with a misuse of [react-transition-group](https://reactcommunity.org/react-transition-group/css-transition)
 * Type checking with [flow-types](https://flow.org/)
 * Code structure following [this guide](https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3ea1920f1) from [@alexmngn](https://twitter.com/alexmngn)
