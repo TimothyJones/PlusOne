@@ -3,6 +3,7 @@
 A game inspired by cell merging mobile games.
 
 [![Build Status](https://travis-ci.org/TimothyJones/PlusOne.svg?branch=master)](https://travis-ci.org/TimothyJones/PlusOne)
+[![Pact Status](https://test.pact.dius.com.au/pacts/provider/The%20Plus%20One%20Game%20ScoreBoard%20Service/consumer/The%20Plus%20One%20Game%20Client/latest/badge.svg)](https://test.pact.dius.com.au/pacts/provider/The%20Plus%20One%20Game%20ScoreBoard%20Service/consumer/The%20Plus%20One%20Game%20Client/latest)
 
 You can play it [here](https://timothyjones.github.io/PlusOne/).
 
