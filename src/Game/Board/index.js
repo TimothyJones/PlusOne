@@ -2,6 +2,7 @@
 
 import React from 'react';
 import store from 'store';
+import uuidv4 from 'uuid/v4';
 
 import './board.css';
 
@@ -16,6 +17,7 @@ import {
   toggleChanges
 } from './service/board';
 import type { BoardState } from './service/board';
+import api from './service/api';
 
 type Props = {
   x: number,
@@ -71,6 +73,14 @@ export default class Board extends React.Component<Props, State> {
     );
   }
 
+  getUserId(): string {
+    const storedUserId: ?string = store.get('user');
+    if (storedUserId === undefined || storedUserId === null) {
+      store.set('user', uuidv4());
+    }
+    return store.get('user');
+  }
+
   determineHighScore(max: number): number {
     const storedHighScore: ?number = store.get('highScore');
     if (
@@ -86,12 +96,21 @@ export default class Board extends React.Component<Props, State> {
   boardState(squares: BoardState) {
     const max = getMax(squares);
     const highScore = this.determineHighScore(max);
+    const ableToMove = canMove(squares);
+
+    if (this.state && max !== this.state.max) {
+      api('http://localhost:8181', this.getUserId()).seeScore(max);
+    }
+
+    if (this.state && this.state.canMove && !ableToMove) {
+      api('http://localhost:8181', this.getUserId()).finalScore(max);
+    }
 
     return {
-      squares: squares,
-      canMove: canMove(squares),
-      max: max,
-      highScore: highScore
+      squares,
+      max,
+      highScore,
+      canMove: ableToMove
     };
   }
 

@@ -1,9 +1,13 @@
-import { Pact } from '@pact-foundation/pact';
-import { api } from './index.js';
+import { Pact, Matchers } from '@pact-foundation/pact';
+import api from './index.js';
+
+const { like, integer } = Matchers;
 
 describe('ScoreBoard request', () => {
-  let url = 'http://localhost';
-  const scoreBoard = api(`${url}:${port}`);
+  const scoreBoard = api(
+    `${url}:${port}`,
+    '6fefe750-07b5-4d8f-b30f-6264372ef54e'
+  );
 
   const EXPECTED_BODY = {
     timesReached: 10
@@ -16,7 +20,10 @@ describe('ScoreBoard request', () => {
         withRequest: {
           method: 'GET',
           path: '/scoreboard',
-          query: 'score=12',
+          query: {
+            score: '12',
+            u: '6fefe750-07b5-4d8f-b30f-6264372ef54e'
+          },
           headers: {
             Accept: 'application/json'
           }
@@ -26,7 +33,9 @@ describe('ScoreBoard request', () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: EXPECTED_BODY
+          body: {
+            timesReached: like(EXPECTED_BODY.timesReached)
+          }
         }
       };
       return provider.addInteraction(interaction);
@@ -54,7 +63,8 @@ describe('ScoreBoard request', () => {
             Accept: 'application/json'
           },
           body: {
-            score: 12
+            score: 12,
+            u: '6fefe750-07b5-4d8f-b30f-6264372ef54e'
           }
         },
         willRespondWith: {

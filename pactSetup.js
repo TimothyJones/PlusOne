@@ -1,6 +1,7 @@
 const path = require('path');
 const { Pact } = require('@pact-foundation/pact');
 
+global.url = 'http://localhost';
 global.port = 8989;
 global.provider = new Pact({
   port: global.port,
