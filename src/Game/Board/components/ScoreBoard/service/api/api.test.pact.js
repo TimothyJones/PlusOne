@@ -39,7 +39,6 @@ describe('ScoreBoard request', () => {
         .then(response => {
           expect(response).toEqual(EXPECTED_BODY);
         })
-        .then(() => provider.verify())
         .then(done);
     });
   });
@@ -76,7 +75,6 @@ describe('ScoreBoard request', () => {
         .then(response => {
           expect(response).toEqual(EXPECTED_BODY);
         })
-        .then(() => provider.verify())
         .then(done);
     });
   });
