@@ -17,7 +17,7 @@ import {
   toggleChanges
 } from './service/board';
 import type { BoardState } from './service/board';
-import api from './service/api';
+//import api from './service/api';
 
 type Props = {
   x: number,
@@ -99,11 +99,11 @@ export default class Board extends React.Component<Props, State> {
     const ableToMove = canMove(squares);
 
     if (this.state && max !== this.state.max) {
-      api('http://localhost:8181', this.getUserId()).seeScore(max);
+      //    api('http://localhost:8181', this.getUserId()).seeScore(max);
     }
 
     if (this.state && this.state.canMove && !ableToMove) {
-      api('http://localhost:8181', this.getUserId()).finalScore(max);
+      //      api('http://localhost:8181', this.getUserId()).finalScore(max);
     }
 
     return {
