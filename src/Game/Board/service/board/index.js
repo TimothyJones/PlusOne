@@ -50,7 +50,7 @@ export function refill(
         return {
           value:
             possibleNumbers[Math.floor(Math.random() * possibleNumbers.length)],
-          drop: squares[0].length - j,
+          drop: 5,
           toggle: sq.toggle,
           merged: false
         };
