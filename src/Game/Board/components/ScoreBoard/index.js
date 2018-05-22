@@ -33,10 +33,16 @@ export default class ScoreBoard extends React.Component<Props> {
 
     const reachedBy = this.props.currentScoreReachedBy ? (
       <p className="reachedBy">
-        reached by {this.props.currentScoreReachedBy} users{' '}
+        {this.props.currentScoreReachedBy > 1
+          ? `reached by ${this.props.currentScoreReachedBy} users`
+          : 'reached only by you!'}
       </p>
     ) : (
-      ''
+      <p className="reachedBy">
+        {this.props.currentScore === 6
+          ? 'reached by everyone'
+          : '...connecting'}
+      </p>
     );
 
     return (

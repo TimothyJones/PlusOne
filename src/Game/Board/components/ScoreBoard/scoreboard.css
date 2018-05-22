@@ -23,6 +23,7 @@
   float: right;
   clear: right;
   font-size: 9px;
+  margin-bottom: 0;
 }
 
 .scoreboard::after {
