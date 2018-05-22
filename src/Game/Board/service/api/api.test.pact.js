@@ -45,8 +45,8 @@ describe('ScoreBoard request', () => {
     it('returns the number of times this score has been reached', done => {
       scoreBoard
         .seeScore(12)
-        .then(response => {
-          expect(response).toEqual(EXPECTED_BODY);
+        .then(score => {
+          expect(score).toEqual(EXPECTED_BODY.timesReached);
         })
         .then(done);
     });
@@ -82,8 +82,8 @@ describe('ScoreBoard request', () => {
     it('returns the number of times this score has been reached', done => {
       scoreBoard
         .finalScore(12)
-        .then(response => {
-          expect(response).toEqual(EXPECTED_BODY);
+        .then(score => {
+          expect(score).toEqual(EXPECTED_BODY.timesReached);
         })
         .then(done);
     });

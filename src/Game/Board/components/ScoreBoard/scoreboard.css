@@ -16,6 +16,13 @@
 .scores {
   float: right;
   clear: right;
+  margin-bottom: 0;
+}
+
+.reachedBy {
+  float: right;
+  clear: right;
+  font-size: 9px;
 }
 
 .scoreboard::after {

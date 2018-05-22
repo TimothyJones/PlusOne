@@ -17,8 +17,10 @@ import {
   collapse,
   toggleChanges
 } from './service/board';
+import api from './service/api';
+import p from '../../../package.json';
+
 import type { BoardState } from './service/board';
-//import api from './service/api';
 
 type Props = {
   x: number,
@@ -30,7 +32,8 @@ type State = {
   max: number,
   highScore: number,
   canMove: boolean,
-  squares: BoardState
+  squares: BoardState,
+  currentScoreReachedBy: ?number
 };
 
 export default class Board extends React.Component<Props, State> {
@@ -106,20 +109,30 @@ export default class Board extends React.Component<Props, State> {
     const max = getMax(squares);
     const highScore = this.determineHighScore(max);
     const ableToMove = canMove(squares);
+    const scoreServer = api(p.providerURL, this.getUserId());
 
     if (this.state && max !== this.state.max) {
-      //    api('http://localhost:8181', this.getUserId()).seeScore(max);
+      scoreServer.seeScore(max).then((x: ?number) => {
+        if (x !== undefined) {
+          this.setState((state, props) => ({
+            ...state,
+            currentScoreReachedBy: x
+          }));
+        }
+      });
     }
-
     if (this.state && this.state.canMove && !ableToMove) {
-      //      api('http://localhost:8181', this.getUserId()).finalScore(max);
+      scoreServer.finalScore(max);
     }
 
     return {
       squares,
       max,
       highScore,
-      canMove: ableToMove
+      canMove: ableToMove,
+      currentScoreReachedBy: this.state
+        ? this.state.currentScoreReachedBy
+        : undefined
     };
   }
 
@@ -182,6 +195,7 @@ export default class Board extends React.Component<Props, State> {
         <div className="game-board">{rows}</div>
         <ScoreBoard
           currentScore={this.state.max}
+          currentScoreReachedBy={this.state.currentScoreReachedBy}
           highScore={this.state.highScore}
           canMove={this.state.canMove}
           onReset={() => this.reset()}

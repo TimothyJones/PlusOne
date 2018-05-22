@@ -8,6 +8,7 @@ import './scoreboard.css';
 type Props = {
   highScore: number,
   currentScore: number,
+  currentScoreReachedBy: ?number,
   canMove: boolean,
   onReset: () => void
 };
@@ -30,9 +31,19 @@ export default class ScoreBoard extends React.Component<Props> {
       </p>
     );
 
+    const reachedBy = this.props.currentScoreReachedBy ? (
+      <p className="reachedBy">
+        reached by {this.props.currentScoreReachedBy} users{' '}
+      </p>
+    ) : (
+      ''
+    );
+
     return (
       <div className="scoreboard">
         {score}
+        {reachedBy}
+        <p />
         <p className="text scores">
           Your high score: {this.scoreFor(this.props.highScore)}
         </p>
