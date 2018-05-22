@@ -10,6 +10,7 @@ import Square from './components/Square';
 import ScoreBoard from './components/ScoreBoard';
 import {
   getMax,
+  getMin,
   refill,
   drop,
   canMove,
@@ -63,11 +64,19 @@ export default class Board extends React.Component<Props, State> {
   }
 
   handleClick(i: number, j: number) {
+    const collapsedBoard = collapse(i, j, this.state.squares);
+    const newMax = getMax(collapsedBoard);
+    const forbiddenSquares = [];
+
+    if (newMax > this.state.max) {
+      forbiddenSquares.push(getMin(this.state.squares));
+    }
+
     this.setState(
       this.boardState(
         toggleChanges(
           this.state.squares,
-          refill(drop(collapse(i, j, this.state.squares)), this.state.max)
+          refill(drop(collapsedBoard), this.state.max, forbiddenSquares)
         )
       )
     );

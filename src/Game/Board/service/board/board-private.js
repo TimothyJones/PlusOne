@@ -1,4 +1,5 @@
 // @flow
+import { getMin } from '.';
 import type { BoardState } from './index.js';
 
 export function killMinimum(squares: BoardState): BoardState {
@@ -18,17 +19,4 @@ export function killMinimum(squares: BoardState): BoardState {
       } else return sq;
     })
   );
-}
-
-export function getMin(squares: BoardState): number {
-  return squares.reduce(function(m, arr) {
-    const rowMax = arr.reduce(function(a, b) {
-      if (b.value === null) {
-        return a;
-      } else {
-        return Math.min(a, b.value);
-      }
-    }, Number.MAX_SAFE_INTEGER);
-    return Math.min(m, rowMax);
-  }, Number.MAX_SAFE_INTEGER);
 }

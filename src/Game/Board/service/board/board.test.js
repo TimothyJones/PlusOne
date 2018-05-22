@@ -1,6 +1,7 @@
 import {
   stripMerge,
   getMax,
+  getMin,
   refill,
   drop,
   canMove,
@@ -108,6 +109,58 @@ describe('refill function', () => {
     filled.map(arr => {
       arr.map(cell => {
         check(cell);
+      });
+    });
+  });
+
+  test("Fills when everything is null, and doesn't include forbidden numbers", () => {
+    const filled = refill(
+      [
+        [
+          { value: null, drop: 0, toggle: true, merged: false },
+          { value: null, drop: 0, toggle: true, merged: false },
+          { value: null, drop: 0, toggle: true, merged: false }
+        ],
+        [
+          { value: null, drop: 0, toggle: true, merged: false },
+          { value: null, drop: 0, toggle: true, merged: false },
+          { value: null, drop: 0, toggle: true, merged: false }
+        ]
+      ],
+      10,
+      [1, 2, 3, 4, 5, 6, 7, 8]
+    );
+
+    filled.map(arr => {
+      arr.map(cell => {
+        check(cell);
+        expect(cell.value).toBe(9);
+      });
+    });
+  });
+
+  test('Fills when everything is null, even if there are no allowed numbers', () => {
+    const filled = refill(
+      [
+        [
+          { value: null, drop: 0, toggle: true, merged: false },
+          { value: null, drop: 0, toggle: true, merged: false },
+          { value: null, drop: 0, toggle: true, merged: false }
+        ],
+        [
+          { value: null, drop: 0, toggle: true, merged: false },
+          { value: null, drop: 0, toggle: true, merged: false },
+          { value: null, drop: 0, toggle: true, merged: false }
+        ]
+      ],
+      10,
+      [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    );
+
+    filled.map(arr => {
+      arr.map(cell => {
+        check(cell);
+        expect(cell.value).toBe(1);
       });
     });
   });
@@ -432,5 +485,28 @@ describe('toggleChanges function', () => {
         { value: 3, drop: 0, toggle: true, merged: false }
       ]
     ]);
+  });
+
+  describe('getMin function', () => {
+    var board;
+    beforeEach(() => {
+      board = createBoard();
+    });
+    test('Minimum value on board', () => {
+      expect(getMin(board)).toEqual(1);
+    });
+
+    test('Minimum value in last place', () => {
+      board[1][2].value = 0;
+      expect(getMin(board)).toEqual(0);
+    });
+    test('Minimum value in first place', () => {
+      board[0][0].value = 0;
+      expect(getMin(board)).toEqual(0);
+    });
+    test('Minimum value in middle', () => {
+      board[1][1].value = 0;
+      expect(getMin(board)).toEqual(0);
+    });
   });
 });

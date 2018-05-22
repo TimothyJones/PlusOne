@@ -1,4 +1,4 @@
-import { killMinimum, getMin } from './board-private.js';
+import { killMinimum } from './board-private.js';
 
 function createBoard() {
   return [
@@ -14,29 +14,6 @@ function createBoard() {
     ]
   ];
 }
-
-describe('getMin function', () => {
-  var board;
-  beforeEach(() => {
-    board = createBoard();
-  });
-  test('Minimum value on board', () => {
-    expect(getMin(board)).toEqual(1);
-  });
-
-  test('Minimum value in last place', () => {
-    board[1][2].value = 0;
-    expect(getMin(board)).toEqual(0);
-  });
-  test('Minimum value in first place', () => {
-    board[0][0].value = 0;
-    expect(getMin(board)).toEqual(0);
-  });
-  test('Minimum value in middle', () => {
-    board[1][1].value = 0;
-    expect(getMin(board)).toEqual(0);
-  });
-});
 
 describe('killMinimum function ', () => {
   var board;

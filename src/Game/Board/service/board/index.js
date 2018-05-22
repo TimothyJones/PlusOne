@@ -1,6 +1,6 @@
 // @flow
 
-import { killMinimum, getMin } from './board-private.js';
+import { killMinimum } from './board-private.js';
 
 type SquareState = {
   value: number | null,
@@ -24,16 +24,32 @@ export function getMax(squares: BoardState): number {
   }, 0);
 }
 
-export function refill(board: BoardState, max: number): BoardState {
+export function refill(
+  board: BoardState,
+  max: number,
+  forbidden: Array<number> = []
+): BoardState {
   const squares: BoardState = JSON.parse(JSON.stringify(board));
 
   const min = Math.min(Math.max(max - 7, 1), getMin(squares));
+
+  const possibleNumbers = [];
+
+  for (var i = min; i < max; i++) {
+    if (!forbidden.includes(i)) {
+      possibleNumbers.push(i);
+    }
+  }
+
+  // Ensure that we can generate at least something
+  if (possibleNumbers.length === 0) possibleNumbers.push(1);
 
   return squares.map((arr, j) =>
     arr.map(sq => {
       if (sq.value === null) {
         return {
-          value: Math.floor(Math.random() * (max - min)) + min,
+          value:
+            possibleNumbers[Math.floor(Math.random() * possibleNumbers.length)],
           drop: squares[0].length - j,
           toggle: sq.toggle,
           merged: false
@@ -162,4 +178,17 @@ export function collapse(i: number, j: number, board: BoardState): BoardState {
     squares[i][j].value = value;
   }
   return squares;
+}
+
+export function getMin(squares: BoardState): number {
+  return squares.reduce(function(m, arr) {
+    const rowMax = arr.reduce(function(a, b) {
+      if (b.value === null) {
+        return a;
+      } else {
+        return Math.min(a, b.value);
+      }
+    }, Number.MAX_SAFE_INTEGER);
+    return Math.min(m, rowMax);
+  }, Number.MAX_SAFE_INTEGER);
 }
