@@ -5,10 +5,16 @@ export type FeatureFlags = {
   StartWithOnesOnly: boolean
 };
 
+export type GeneratorConfig = {
+  maxInitial: number,
+  usualRange: number
+};
+
 export type Config = {
   version: string,
   providerUrl: string,
   homepage: string,
+  generator: GeneratorConfig,
   features: FeatureFlags
 };
 
@@ -27,6 +33,10 @@ const config: Config = {
       ? Boolean(process.env.SCORE_SERVER)
       : false,
     StartWithOnesOnly: false
+  },
+  generator: {
+    maxInitial: 6,
+    usualRange: 7
   }
 };
 

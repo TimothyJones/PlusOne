@@ -48,7 +48,7 @@ export default class Board extends React.Component<Props, State> {
         value: config.features.StartWithOnesOnly
           ? 1
           : Math.round(Math.random() * (this.props.maxInitial - 2)) + 1,
-        drop: 5,
+        drop: this.props.y,
         toggle: false,
         merged: false
       }))

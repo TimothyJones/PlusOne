@@ -1,6 +1,7 @@
 // @flow
 
 import { killMinimum } from './board-private.js';
+import config from '../../../../config.js';
 
 type SquareState = {
   value: number | null,
@@ -31,7 +32,10 @@ export function refill(
 ): BoardState {
   const squares: BoardState = JSON.parse(JSON.stringify(board));
 
-  const min = Math.min(Math.max(max - 7, 1), getMin(squares));
+  const min = Math.min(
+    Math.max(max - config.generator.usualRange, 1),
+    getMin(squares)
+  );
 
   const possibleNumbers = [];
 

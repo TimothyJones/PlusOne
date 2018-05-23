@@ -17,7 +17,7 @@ export default class Game extends React.Component<Props> {
       <div className="game">
         <Instructions />
         <div>
-          <Board x={5} y={5} maxInitial={6} />
+          <Board x={5} y={5} maxInitial={config.generator.maxInitial} />
         </div>
         <ShareCount url={config.homepage} />
         <VersionNumber />
