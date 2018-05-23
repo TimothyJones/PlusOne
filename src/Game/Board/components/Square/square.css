@@ -35,7 +35,7 @@
   line-height: 54px;
   height: 54px;
   width: 54px;
-  background: #fff;
+  background: #fdfde2;
   font-family: system-ui;
   color: #000;
   border-radius: 15%;
@@ -249,5 +249,5 @@
 }
 
 .maxNumber {
-  background: #e1f5fe;
+  background: #ffffff;
 }
