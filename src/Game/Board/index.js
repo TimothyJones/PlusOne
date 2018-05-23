@@ -120,7 +120,12 @@ export default class Board extends React.Component<Props, State> {
         }
       });
     }
-    if (this.state && this.state.canMove && !ableToMove) {
+    if (
+      this.state &&
+      process.env.FEATURE.ScoreServer &&
+      this.state.canMove &&
+      !ableToMove
+    ) {
       scoreServer.finalScore(max);
     }
 

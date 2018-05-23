@@ -7,7 +7,8 @@ module.exports = function override(config, env) {
     new webpack.DefinePlugin({
       'process.env.APP_VERSION': JSON.stringify(p.version),
       'process.env.PROVIDER_URL': JSON.stringify(p.providerURL),
-      'process.env.HOMEPAGE': JSON.stringify(p.homepage)
+      'process.env.HOMEPAGE': JSON.stringify(p.homepage),
+      'process.env.FEATURE.ScoreServer': false
     })
   );
   return config;

@@ -16,6 +16,9 @@
 .scores {
   float: right;
   clear: right;
+}
+
+.scores.withScoreServer {
   margin-bottom: 0;
 }
 
