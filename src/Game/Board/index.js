@@ -45,7 +45,9 @@ export default class Board extends React.Component<Props, State> {
   newSquares(): BoardState {
     const squares = Array.from(Array(this.props.x), () =>
       new Array(this.props.y).fill(null).map(() => ({
-        value: Math.round(Math.random() * (this.props.maxInitial - 2)) + 1,
+        value: config.features.StartWithOnesOnly
+          ? 1
+          : Math.round(Math.random() * (this.props.maxInitial - 2)) + 1,
         drop: 5,
         toggle: false,
         merged: false

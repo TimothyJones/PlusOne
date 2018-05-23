@@ -1,7 +1,8 @@
 // @flow
 
 export type FeatureFlags = {
-  ScoreServer: boolean
+  ScoreServer: boolean,
+  StartWithOnesOnly: boolean
 };
 
 export type Config = {
@@ -24,7 +25,8 @@ const config: Config = {
   features: {
     ScoreServer: process.env.SCORE_SERVER
       ? Boolean(process.env.SCORE_SERVER)
-      : false
+      : false,
+    StartWithOnesOnly: false
   }
 };
 
