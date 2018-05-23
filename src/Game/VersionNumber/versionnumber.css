@@ -1,0 +1,16 @@
+.bar {
+  width: 100%;
+  margin: 0 auto;
+
+  height: 1px;
+
+  background-color: #e8e7e3;
+}
+
+.version {
+  font-size: 0.8em;
+  color: #e8e7e3;
+  margin: 0.2em;
+  font-weight: lighter;
+  text-align: center;
+}

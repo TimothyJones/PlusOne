@@ -21,7 +21,7 @@ type Props = { url: string };
 export default class ScoreBoard extends React.Component<Props> {
   render() {
     return (
-      <div>
+      <div className="shareBox">
         <p className="shareHeader">Share:</p>
         <FacebookShareButton url={this.props.url}>
           <span className="shareButton">
