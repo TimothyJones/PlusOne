@@ -14,5 +14,11 @@ if (root === null) {
 }
 ReactDOM.render(<Game />, root);
 registerServiceWorker();
-console.log('Running Plus One game ' + config.version);
+console.log(`Running Plus One Game ${config.version}`);
+console.log(
+  `  Settings: range ${
+    config.generator.usualRange
+  }, score server ${config.features.ScoreServer.toString()}`
+);
+
 // ========================================

@@ -36,7 +36,7 @@ const config: Config = {
   },
   generator: {
     maxInitial: 6,
-    usualRange: 7
+    usualRange: 8
   }
 };
 
