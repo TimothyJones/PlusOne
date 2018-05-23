@@ -209,7 +209,43 @@
 }
 
 .color24 {
-  background: #e1f5fe;
+  background: #e2e9fd;
+}
+
+.color25 {
+  background: #fdfde2;
+}
+
+.color26 {
+  background: #fde2e2;
+}
+
+.color27 {
+  background: #e2e2fd;
+}
+
+.color28 {
+  background: #e2fde2;
+}
+
+.color29 {
+  background: #fdfde2;
+}
+
+.color30 {
+  background: #e7f4fd;
+}
+
+.color31,
+.color32,
+.color33,
+.color34,
+.color35,
+.color36,
+.color37,
+.color38,
+.color39 {
+  background: #e2fdfd;
 }
 
 .maxNumber {
