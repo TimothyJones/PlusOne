@@ -18,7 +18,7 @@ import {
   toggleChanges
 } from './service/board';
 import api from './service/api';
-
+import config from '../../config.js';
 import type { BoardState } from './service/board';
 
 type Props = {
@@ -108,7 +108,7 @@ export default class Board extends React.Component<Props, State> {
     const max = getMax(squares);
     const highScore = this.determineHighScore(max);
     const ableToMove = canMove(squares);
-    const scoreServer = api(process.env.PROVIDER_URL, this.getUserId());
+    const scoreServer = api(config.providerUrl, this.getUserId());
 
     if (this.state && max !== this.state.max) {
       scoreServer.seeScore(max).then((x: ?number) => {
@@ -122,7 +122,7 @@ export default class Board extends React.Component<Props, State> {
     }
     if (
       this.state &&
-      process.env.FEATURE.ScoreServer &&
+      config.features.ScoreServer &&
       this.state.canMove &&
       !ableToMove
     ) {

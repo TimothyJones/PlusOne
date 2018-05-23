@@ -2,9 +2,11 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import registerServiceWorker from './registerServiceWorker';
+
 import Game from './Game';
+import config from './config.js';
+import './index.css';
 
 var root = document.getElementById('root');
 if (root === null) {
@@ -12,5 +14,5 @@ if (root === null) {
 }
 ReactDOM.render(<Game />, root);
 registerServiceWorker();
-console.log('Running Plus One game ' + process.env.APP_VERSION);
+console.log('Running Plus One game ' + config.version);
 // ========================================

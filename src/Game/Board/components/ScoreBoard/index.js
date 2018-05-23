@@ -3,6 +3,7 @@
 import React from 'react';
 import classnames from 'classnames';
 
+import config from '../../../../config.js';
 import './scoreboard.css';
 
 type Props = {
@@ -21,7 +22,7 @@ export default class ScoreBoard extends React.Component<Props> {
   }
 
   render() {
-    const scoresClasses = process.env.FEATURE.ScoreServer
+    const scoresClasses = config.features.ScoreServer
       ? ['scores', 'withScoreServer']
       : 'scores';
 
@@ -35,7 +36,7 @@ export default class ScoreBoard extends React.Component<Props> {
       </p>
     );
 
-    const reachedBy = process.env.FEATURE.ScoreServer ? (
+    const reachedBy = config.features.ScoreServer ? (
       this.props.currentScoreReachedBy ? (
         <p className="reachedBy">
           {this.props.currentScoreReachedBy > 1
