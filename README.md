@@ -23,4 +23,5 @@ Written in [React](https://reactjs.org/), as a practice project. It includes / u
 * Browser local storage provided with [store.js](https://github.com/marcuswestin/store.js/)
 * CSS transitions / animations with a misuse of [react-transition-group](https://reactcommunity.org/react-transition-group/css-transition)
 * Type checking with [flow-types](https://flow.org/)
+* Overridden webpack config with [react-app-rewired](https://github.com/timarney/react-app-rewired)
 * Code structure following [this guide](https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3ea1920f1) from [@alexmngn](https://twitter.com/alexmngn)
