@@ -37,7 +37,7 @@ export default class ScoreBoard extends React.Component<Props> {
     );
 
     const reachedBy = config.features.ScoreServer ? (
-      this.props.currentScoreReachedBy ? (
+      this.props.currentScoreReachedBy && this.props.currentScore !== 6 ? (
         <p className="reachedBy">
           {this.props.currentScoreReachedBy > 1
             ? `reached ${this.props.currentScoreReachedBy} times`
