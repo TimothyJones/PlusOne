@@ -24,7 +24,7 @@ const config: Config = {
     : 'Unknown Version',
   providerUrl: process.env.PROVIDER_URL
     ? process.env.PROVIDER_URL
-    : 'http://evening-plains-57431.herokuapp.com/',
+    : 'https://evening-plains-57431.herokuapp.com/',
   homepage: process.env.HOMEPAGE
     ? process.env.HOMEPAGE
     : 'http://timothyjones.github.io/PlusOne',

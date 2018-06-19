@@ -1,7 +1,7 @@
 {
   "name": "The-Plus-One-Game",
   "version": "1.1.2",
-  "providerURL": "http://evening-plains-57431.herokuapp.com/",
+  "providerURL": "https://evening-plains-57431.herokuapp.com/",
   "homepage": "http://timothyjones.github.io/PlusOne",
   "private": true,
   "dependencies": {
