@@ -30,9 +30,6 @@ describe('ScoreBoard request', () => {
         },
         willRespondWith: {
           status: 200,
-          headers: {
-            'Content-Type': 'application/json'
-          },
           body: {
             timesReached: like(EXPECTED_BODY.timesReached)
           }
@@ -60,7 +57,8 @@ describe('ScoreBoard request', () => {
           method: 'POST',
           path: '/scoreboard',
           headers: {
-            Accept: 'application/json'
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
           },
           body: {
             score: 12,
@@ -69,10 +67,7 @@ describe('ScoreBoard request', () => {
         },
         willRespondWith: {
           status: 201,
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: EXPECTED_BODY
+          body: like(EXPECTED_BODY)
         }
       };
       return provider.addInteraction(interaction);
