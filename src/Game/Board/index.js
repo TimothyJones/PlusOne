@@ -20,6 +20,7 @@ import {
 import api from './service/api';
 import config from '../../config.js';
 import type { BoardState } from './service/board';
+import type { ScoreBoardFromServer } from './service/api';
 
 type Props = {
   x: number,
@@ -32,7 +33,8 @@ type State = {
   highScore: number,
   canMove: boolean,
   squares: BoardState,
-  currentScoreReachedBy: ?number
+  currentScoreReachedBy: ?number,
+  globalHighScore: ?number
 };
 
 export default class Board extends React.Component<Props, State> {
@@ -113,13 +115,12 @@ export default class Board extends React.Component<Props, State> {
     const scoreServer = api(config.providerUrl, this.getUserId());
 
     if (this.state && max !== this.state.max) {
-      scoreServer.finalScore(max).then((x: ?number) => {
-        if (x !== undefined) {
-          this.setState((state, props) => ({
-            ...state,
-            currentScoreReachedBy: x
-          }));
-        }
+      scoreServer.reachedScore(max).then((resp: ?ScoreBoardFromServer) => {
+        this.setState((state, props) => ({
+          ...state,
+          currentScoreReachedBy: resp ? resp.reachedBy : undefined,
+          globalHighScore: resp ? resp.globalHighScore : undefined
+        }));
       });
     }
     if (
@@ -128,7 +129,7 @@ export default class Board extends React.Component<Props, State> {
       this.state.canMove &&
       !ableToMove
     ) {
-      scoreServer.finalScore(max);
+      scoreServer.reachedScore(max);
     }
 
     return {
@@ -138,7 +139,8 @@ export default class Board extends React.Component<Props, State> {
       canMove: ableToMove,
       currentScoreReachedBy: this.state
         ? this.state.currentScoreReachedBy
-        : undefined
+        : undefined,
+      globalHighScore: this.state ? this.state.globalHighScore : undefined
     };
   }
 
@@ -202,6 +204,7 @@ export default class Board extends React.Component<Props, State> {
         <ScoreBoard
           currentScore={this.state.max}
           currentScoreReachedBy={this.state.currentScoreReachedBy}
+          globalHighScore={this.state.globalHighScore}
           highScore={this.state.highScore}
           canMove={this.state.canMove}
           onReset={() => this.reset()}

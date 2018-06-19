@@ -1,21 +1,27 @@
 // @flow
 import fetch from 'cross-fetch';
 
-type ScoreDefinition = {
-  timesReached: number
+type WireScoreDefinition = {
+  timesReached: number,
+  globalHighScore: number
 };
 
-type ScoreError = {
+type WireScoreError = {
   error: string
 };
 
-type ScoreResponse = ScoreDefinition | ScoreError;
+type WireScoreResponse = WireScoreDefinition | WireScoreError;
+
+export type ScoreBoardFromServer = {
+  reachedBy: number,
+  globalHighScore: ?number
+};
 
 const apiPost = (
   hostAndPort: string,
   query: string,
   body: any
-): Promise<ScoreResponse> =>
+): Promise<WireScoreResponse> =>
   fetchWith(`${hostAndPort}/${query}`, {
     method: 'POST',
     headers: {
@@ -25,19 +31,7 @@ const apiPost = (
     body: JSON.stringify(body)
   });
 
-const apiGet = (
-  hostAndPort: string,
-  query: string,
-  body: any
-): Promise<ScoreResponse> =>
-  fetchWith(`${hostAndPort}/${query}`, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json'
-    }
-  });
-
-const fetchWith = (url: string, options: any): Promise<ScoreResponse> =>
+const fetchWith = (url: string, options: any): Promise<WireScoreResponse> =>
   fetch(url, options)
     .then(function(response) {
       if (response.ok) {
@@ -52,22 +46,23 @@ const fetchWith = (url: string, options: any): Promise<ScoreResponse> =>
       error: reason
     }));
 
-const handleResponse = (response: ScoreResponse) => {
+const handleResponse = (response: WireScoreResponse): ?ScoreBoardFromServer => {
   if (typeof response.error === 'string') {
     console.log(`Unable to reach ScoreBoard due to ${response.error}`);
   }
   return response.timesReached !== undefined
-    ? Number(response.timesReached)
+    ? {
+        reachedBy: Number(response.timesReached),
+        globalHighScore: response.globalHighScore
+          ? Number(response.globalHighScore)
+          : undefined
+      }
     : undefined;
 };
 
 export default (hostAndPort: string, userId: string) => ({
-  finalScore: (score: number): Promise<?number> =>
+  reachedScore: (score: number): Promise<?ScoreBoardFromServer> =>
     apiPost(hostAndPort, 'scoreboard', { score, u: userId }).then(
-      handleResponse
-    ),
-  seeScore: (score: number): Promise<?number> =>
-    apiGet(hostAndPort, `scoreboard?score=${score}&u=${userId}`).then(
       handleResponse
     )
 });

@@ -10,6 +10,7 @@ type Props = {
   highScore: number,
   currentScore: number,
   currentScoreReachedBy: ?number,
+  globalHighScore: ?number,
   canMove: boolean,
   onReset: () => void
 };
@@ -54,6 +55,15 @@ export default class ScoreBoard extends React.Component<Props> {
       '' // Scoreboard server feature disabled
     );
 
+    const globalHighScore =
+      config.features.ScoreServer && this.props.globalHighScore ? (
+        <p className="text scores">
+          Global high score: {this.scoreFor(this.props.globalHighScore)}
+        </p>
+      ) : (
+        ''
+      );
+
     return (
       <div className="scoreboard">
         {score}
@@ -61,6 +71,7 @@ export default class ScoreBoard extends React.Component<Props> {
         <p className="text scores">
           Your high score: {this.scoreFor(this.props.highScore)}
         </p>
+        {globalHighScore}
         <p className="scores">
           <button onClick={() => this.props.onReset()}>reset</button>
         </p>
