@@ -113,7 +113,7 @@ export default class Board extends React.Component<Props, State> {
     const scoreServer = api(config.providerUrl, this.getUserId());
 
     if (this.state && max !== this.state.max) {
-      scoreServer.seeScore(max).then((x: ?number) => {
+      scoreServer.finalScore(max).then((x: ?number) => {
         if (x !== undefined) {
           this.setState((state, props) => ({
             ...state,

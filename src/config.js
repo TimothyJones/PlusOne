@@ -24,14 +24,14 @@ const config: Config = {
     : 'Unknown Version',
   providerUrl: process.env.PROVIDER_URL
     ? process.env.PROVIDER_URL
-    : 'http://localhost:8182',
+    : 'http://evening-plains-57431.herokuapp.com/',
   homepage: process.env.HOMEPAGE
     ? process.env.HOMEPAGE
     : 'http://timothyjones.github.io/PlusOne',
   features: {
     ScoreServer: process.env.SCORE_SERVER
       ? Boolean(process.env.SCORE_SERVER)
-      : false,
+      : true,
     StartWithOnesOnly: false
   },
   generator: {

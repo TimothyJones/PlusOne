@@ -40,7 +40,7 @@ export default class ScoreBoard extends React.Component<Props> {
       this.props.currentScoreReachedBy ? (
         <p className="reachedBy">
           {this.props.currentScoreReachedBy > 1
-            ? `reached by ${this.props.currentScoreReachedBy} users`
+            ? `reached ${this.props.currentScoreReachedBy} times`
             : 'reached only by you!'}
         </p>
       ) : (
