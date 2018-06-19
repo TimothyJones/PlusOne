@@ -114,7 +114,7 @@ export default class Board extends React.Component<Props, State> {
     const ableToMove = canMove(squares);
     const scoreServer = api(config.providerUrl, this.getUserId());
 
-    if (this.state && max !== this.state.max) {
+    if ((this.state && max !== this.state.max) || !this.state) {
       scoreServer.reachedScore(max).then((resp: ?ScoreBoardFromServer) => {
         this.setState((state, props) => ({
           ...state,
