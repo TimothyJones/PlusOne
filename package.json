@@ -30,7 +30,7 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build",
+    "predeploy": "CI=true npm run test && npm run flow && npm run pactTest && node scripts/publish.js && npm run build",
     "deploy": "gh-pages -d build",
     "flow": "flow",
     "pactTest":
