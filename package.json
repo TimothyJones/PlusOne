@@ -33,7 +33,6 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "flow": "flow",
-    "pactTest":
-      "export NODE_ENV=pactTest && jest --testRegex \"/*(.test.pact.js)\" --runInBand --setupFiles ./pactSetup.js --setupTestFrameworkScriptFile ./pactTestWrapper.js"
+    "pactTest": "export NODE_ENV=pactTest && jest --testRegex \"/*(.test.pact.js)\" --runInBand --setupFiles ./pactSetup.js --setupTestFrameworkScriptFile ./pactTestWrapper.js"
   }
 }
