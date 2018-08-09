@@ -28,12 +28,14 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
     "predeploy": "CI=true npm run test && npm run flow && npm run pactTest && node scripts/publish.js && npm run build",
+    "test": "react-app-rewired test --coverage --env=jsdom",
     "deploy": "gh-pages -d build",
     "flow": "flow",
     "pactTest":
-      "export NODE_ENV=pactTest && jest --testRegex \"/*(.test.pact.js)\" --runInBand --setupFiles ./pactSetup.js --setupTestFrameworkScriptFile ./pactTestWrapper.js"
+      "export NODE_ENV=pactTest && jest --testRegex \"/*(.test.pact.js)\" --runInBand --setupFiles ./pactSetup.js --setupTestFrameworkScriptFile ./pactTestWrapper.js",
+    "preversion": "npm run flow && npm run test && npm run pactTest",
+    "postversion": "node scripts/publish.js && git push" 
   }
 }
