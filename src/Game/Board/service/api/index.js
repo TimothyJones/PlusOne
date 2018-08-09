@@ -17,6 +17,20 @@ export type ScoreBoardFromServer = {
   globalHighScore: ?number
 };
 
+const fetchWith = (url: string, options: any): Promise<WireScoreResponse> =>
+  fetch(url, options)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      return {
+        error: response.statusText + JSON.stringify(response.json())
+      };
+    })
+    .catch(reason => ({
+      error: reason
+    }));
+
 const apiPost = (
   hostAndPort: string,
   query: string,
@@ -31,24 +45,9 @@ const apiPost = (
     body: JSON.stringify(body)
   });
 
-const fetchWith = (url: string, options: any): Promise<WireScoreResponse> =>
-  fetch(url, options)
-    .then(function(response) {
-      if (response.ok) {
-        return response.json();
-      } else {
-        return {
-          error: response.statusText + JSON.stringify(response.json())
-        };
-      }
-    })
-    .catch(reason => ({
-      error: reason
-    }));
-
 const handleResponse = (response: WireScoreResponse): ?ScoreBoardFromServer => {
   if (typeof response.error === 'string') {
-    console.log(`Unable to reach ScoreBoard due to ${response.error}`);
+    console.error(`Unable to reach ScoreBoard due to ${response.error}`);
   }
   return response.timesReached !== undefined
     ? {

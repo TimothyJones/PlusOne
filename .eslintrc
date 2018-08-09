@@ -1,0 +1,22 @@
+{
+  "parser": "babel-eslint",
+  "extends": [ "plugin:flowtype/recommended" , "airbnb" , "prettier" ],
+  "plugins": [ "flowtype" ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src", "node_modules"]
+      }
+    }
+  },
+  "env": {
+      "jest": true
+  },
+  "rules" : {
+    "no-console": ["error", { allow: ["warn", "error", "info"] }],
+    "react/destructuring-assignment": "ignore",
+    "react/jsx-filename-extension": "disable",
+    "react/jsx-one-expression-per-line": "disable",
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
+  }
+}

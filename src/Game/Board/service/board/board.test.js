@@ -3,11 +3,12 @@ import {
   getMax,
   getMin,
   refill,
-  drop,
+  dropBoard,
   canMove,
   collapse,
-  toggleChanges
-} from './index.js';
+  toggleChanges,
+  killMinimum
+} from './index';
 
 function createBoard() {
   return [
@@ -23,6 +24,52 @@ function createBoard() {
     ]
   ];
 }
+
+describe('killMinimum function ', () => {
+  let board;
+  beforeEach(() => {
+    board = createBoard();
+  });
+  test('Minimum value in first place', () => {
+    const newBoard = killMinimum(board);
+    expect(newBoard[0][0].value).toBeNull();
+    expect(newBoard[0][1].value).toEqual(2);
+  });
+
+  test('Minimum value in last place', () => {
+    board[1][2].value = 1;
+    const newBoard = killMinimum(board);
+    expect(newBoard[1][2].value).toBeNull();
+    expect(newBoard[0][1].value).toEqual(2);
+  });
+  test('Minimum value in first place', () => {
+    board[1][2].value = 1;
+    const newBoard = killMinimum(board);
+    expect(newBoard[1][2].value).toBeNull();
+    expect(newBoard[0][1].value).toEqual(2);
+  });
+  test('All minimums', () => {
+    const newBoard = killMinimum([
+      [
+        { value: 2, drop: 0, toggle: true },
+        { value: 2, drop: 0, toggle: true },
+        { value: 2, drop: 0, toggle: true }
+      ],
+      [
+        { value: 2, drop: 0, toggle: true },
+        { value: 2, drop: 0, toggle: true },
+        { value: 2, drop: 0, toggle: true }
+      ]
+    ]);
+    newBoard.forEach(arr => {
+      arr.forEach(cell => {
+        expect(cell.value).toBeNull();
+      });
+    });
+    expect(newBoard.length).toEqual(2);
+    expect(newBoard[0].length).toEqual(3);
+  });
+});
 
 describe('stripMerge function', () => {
   expect(
@@ -53,7 +100,7 @@ describe('stripMerge function', () => {
 });
 
 describe('getMax function', () => {
-  var board;
+  let board;
   beforeEach(() => {
     board = createBoard();
   });
@@ -77,11 +124,6 @@ describe('getMax function', () => {
 });
 
 describe('refill function', () => {
-  var board;
-  beforeEach(() => {
-    board = createBoard();
-  });
-
   function check(cell) {
     expect(cell.value).toBeGreaterThan(0);
     expect(cell.value).toBeLessThan(10);
@@ -106,8 +148,8 @@ describe('refill function', () => {
       10
     );
 
-    filled.map(arr => {
-      arr.map(cell => {
+    filled.forEach(arr => {
+      arr.forEach(cell => {
         check(cell);
       });
     });
@@ -131,8 +173,8 @@ describe('refill function', () => {
       [1, 2, 3, 4, 5, 6, 7, 8]
     );
 
-    filled.map(arr => {
-      arr.map(cell => {
+    filled.forEach(arr => {
+      arr.forEach(cell => {
         check(cell);
         expect(cell.value).toBe(9);
       });
@@ -157,8 +199,8 @@ describe('refill function', () => {
       [1, 2, 3, 4, 5, 6, 7, 8, 9]
     );
 
-    filled.map(arr => {
-      arr.map(cell => {
+    filled.forEach(arr => {
+      arr.forEach(cell => {
         check(cell);
         expect(cell.value).toBe(1);
       });
@@ -212,7 +254,7 @@ describe('drop function ', () => {
       ]
     ];
 
-    const newBoard = drop(board);
+    const newBoard = dropBoard(board);
     expect(newBoard).toEqual(board);
   });
 
@@ -230,7 +272,7 @@ describe('drop function ', () => {
       ]
     ];
 
-    const newBoard = drop(board);
+    const newBoard = dropBoard(board);
     expect(newBoard).toEqual(board);
   });
 
@@ -248,7 +290,7 @@ describe('drop function ', () => {
       ]
     ];
 
-    const newBoard = drop(board);
+    const newBoard = dropBoard(board);
     expect(newBoard).toEqual([
       [
         { value: null, drop: 0, toggle: true, merged: false },
@@ -488,7 +530,7 @@ describe('toggleChanges function', () => {
   });
 
   describe('getMin function', () => {
-    var board;
+    let board;
     beforeEach(() => {
       board = createBoard();
     });

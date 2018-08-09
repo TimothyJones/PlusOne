@@ -18,52 +18,51 @@ import './sharecount.css';
 
 type Props = { url: string };
 
-export default class ScoreBoard extends React.Component<Props> {
-  render() {
-    return (
-      <div className="shareBox">
-        <p className="shareHeader">Share:</p>
-        <FacebookShareButton url={this.props.url}>
-          <span className="shareButton">
-            <FacebookIcon size={44} round={true} />
-            <FacebookShareCount url={this.props.url}>
-              {(shareCount: number) =>
-                shareCount !== 0 ? (
-                  <p className="shareCount">{shareCount}</p>
-                ) : (
-                  <p />
-                )
-              }
-            </FacebookShareCount>
-          </span>
-        </FacebookShareButton>
-        <TwitterShareButton url={this.props.url}>
-          <span className="shareButton">
-            <TwitterIcon size={44} round={true} />
-          </span>
-        </TwitterShareButton>
-        <RedditShareButton url={this.props.url}>
-          <span className="shareButton">
-            <RedditIcon size={44} round={true} />
-            <RedditShareCount url={this.props.url}>
-              {(shareCount: number) =>
-                shareCount !== 0 ? (
-                  <p className="shareCount">{shareCount}</p>
-                ) : (
-                  <p />
-                )
-              }
-            </RedditShareCount>
-          </span>
-        </RedditShareButton>
+export default (props: Props) => {
+  const { url } = props;
+  return (
+    <div className="shareBox">
+      <p className="shareHeader">Share:</p>
+      <FacebookShareButton url={url}>
         <span className="shareButton">
-          <EmailShareButton url={this.props.url}>
-            <span className="shareButton">
-              <EmailIcon size={44} round={true} />
-            </span>
-          </EmailShareButton>
+          <FacebookIcon size={44} round />
+          <FacebookShareCount url={url}>
+            {(shareCount: number) =>
+              shareCount !== 0 ? (
+                <p className="shareCount">{shareCount}</p>
+              ) : (
+                <p />
+              )
+            }
+          </FacebookShareCount>
         </span>
-      </div>
-    );
-  }
-}
+      </FacebookShareButton>
+      <TwitterShareButton url={url}>
+        <span className="shareButton">
+          <TwitterIcon size={44} round />
+        </span>
+      </TwitterShareButton>
+      <RedditShareButton url={url}>
+        <span className="shareButton">
+          <RedditIcon size={44} round />
+          <RedditShareCount url={url}>
+            {(shareCount: number) =>
+              shareCount !== 0 ? (
+                <p className="shareCount">{shareCount}</p>
+              ) : (
+                <p />
+              )
+            }
+          </RedditShareCount>
+        </span>
+      </RedditShareButton>
+      <span className="shareButton">
+        <EmailShareButton url={url}>
+          <span className="shareButton">
+            <EmailIcon size={44} round />
+          </span>
+        </EmailShareButton>
+      </span>
+    </div>
+  );
+};

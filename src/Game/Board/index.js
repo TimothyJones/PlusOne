@@ -12,13 +12,13 @@ import {
   getMax,
   getMin,
   refill,
-  drop,
+  dropBoard,
   canMove,
   collapse,
   toggleChanges
 } from './service/board';
 import api from './service/api';
-import config from '../../config.js';
+import config from '../../config';
 import type { BoardState } from './service/board';
 import type { ScoreBoardFromServer } from './service/api';
 
@@ -38,10 +38,30 @@ type State = {
 };
 
 export default class Board extends React.Component<Props, State> {
+  static determineHighScore(max: number): number {
+    const storedHighScore: ?number = store.get('highScore');
+    if (
+      storedHighScore === undefined ||
+      storedHighScore === null ||
+      max > storedHighScore
+    ) {
+      store.set('highScore', max);
+    }
+    return store.get('highScore');
+  }
+
   constructor(props: Props) {
     super(props);
 
     this.state = this.boardState(this.newSquares());
+  }
+
+  static getUserId(): string {
+    const storedUserId: ?string = store.get('user');
+    if (storedUserId === undefined || storedUserId === null) {
+      store.set('user', uuidv4());
+    }
+    return store.get('user');
   }
 
   newSquares(): BoardState {
@@ -64,8 +84,8 @@ export default class Board extends React.Component<Props, State> {
   }
 
   reset() {
-    this.setState(
-      this.boardState(toggleChanges(this.state.squares, this.newSquares()))
+    this.setState(oldState =>
+      this.boardState(toggleChanges(oldState.squares, this.newSquares()))
     );
   }
 
@@ -78,45 +98,25 @@ export default class Board extends React.Component<Props, State> {
       forbiddenSquares.push(getMin(this.state.squares));
     }
 
-    this.setState(
+    this.setState(oldState =>
       this.boardState(
         toggleChanges(
-          this.state.squares,
-          refill(drop(collapsedBoard), this.state.max, forbiddenSquares)
+          oldState.squares,
+          refill(dropBoard(collapsedBoard), oldState.max, forbiddenSquares)
         )
       )
     );
   }
 
-  getUserId(): string {
-    const storedUserId: ?string = store.get('user');
-    if (storedUserId === undefined || storedUserId === null) {
-      store.set('user', uuidv4());
-    }
-    return store.get('user');
-  }
-
-  determineHighScore(max: number): number {
-    const storedHighScore: ?number = store.get('highScore');
-    if (
-      storedHighScore === undefined ||
-      storedHighScore === null ||
-      max > storedHighScore
-    ) {
-      store.set('highScore', max);
-    }
-    return store.get('highScore');
-  }
-
   boardState(squares: BoardState) {
     const max = getMax(squares);
-    const highScore = this.determineHighScore(max);
+    const highScore = Board.determineHighScore(max);
     const ableToMove = canMove(squares);
-    const scoreServer = api(config.providerUrl, this.getUserId());
+    const scoreServer = api(config.providerUrl, Board.getUserId());
 
     if ((this.state && max !== this.state.max) || !this.state) {
       scoreServer.reachedScore(max).then((resp: ?ScoreBoardFromServer) => {
-        this.setState((state, props) => ({
+        this.setState(state => ({
           ...state,
           currentScoreReachedBy: resp ? resp.reachedBy : undefined,
           globalHighScore: resp ? resp.globalHighScore : undefined
@@ -144,30 +144,28 @@ export default class Board extends React.Component<Props, State> {
     };
   }
 
-  renderSquare(i: number, j: number) {
-    const x = this.props.x;
-    const y = this.props.y;
-    const squares = this.state.squares;
+  borderWith(i, j, value) {
+    const { x, y } = this.props;
+    if (i < 0 || i >= x) return true;
+    if (j < 0 || j >= y) return true;
+    if (this.state.squares[i][j].value !== value) return true;
+    return false;
+  }
 
+  renderSquare(i: number, j: number) {
+    const { squares } = this.state;
     const { value, drop, toggle, merged } = squares[i][j];
 
-    function borderWith(i, j) {
-      if (i < 0 || i >= x) return true;
-      if (j < 0 || j >= y) return true;
-      if (squares[i][j].value !== value) return true;
-      return false;
-    }
-
     const style = {
-      leftBorder: borderWith(i - 1, j),
-      noLeftBorder: !borderWith(i - 1, j),
-      rightBorder: borderWith(i + 1, j),
-      noRightBorder: !borderWith(i + 1, j),
-      topBorder: borderWith(i, j - 1),
-      noTopBorder: !borderWith(i, j - 1),
-      bottomBorder: borderWith(i, j + 1),
-      merged: merged,
-      ['color' + (value === null ? '' : value)]: true,
+      leftBorder: this.borderWith(i - 1, j, value),
+      noLeftBorder: !this.borderWith(i - 1, j, value),
+      rightBorder: this.borderWith(i + 1, j, value),
+      noRightBorder: !this.borderWith(i + 1, j, value),
+      topBorder: this.borderWith(i, j - 1, value),
+      noTopBorder: !this.borderWith(i, j - 1, value),
+      bottomBorder: this.borderWith(i, j + 1, value),
+      merged,
+      [`color${value === null ? '' : value}`]: true,
       maxNumber: this.state.max === value
     };
 
@@ -184,10 +182,10 @@ export default class Board extends React.Component<Props, State> {
   }
 
   render() {
-    var rows = [];
-    for (var j = 0; j < this.props.y; j++) {
-      var row = [];
-      for (var i = 0; i < this.props.x; i++) {
+    const rows = [];
+    for (let j = 0; j < this.props.y; j += 1) {
+      const row = [];
+      for (let i = 0; i < this.props.x; i += 1) {
         row.push(this.renderSquare(i, j));
       }
       rows.push(

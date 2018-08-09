@@ -14,21 +14,18 @@ type Props = {
   onClick: () => void
 };
 
-export default class Square extends React.Component<Props> {
-  render() {
-    return (
-      <CSSTransition
-        in={this.props.toggle}
-        timeout={10}
-        classNames={'drop' + this.props.drop}
-      >
-        <button
-          className={classnames('square', this.props.style)}
-          onClick={() => this.props.onClick()}
-        >
-          {this.props.value}
-        </button>
-      </CSSTransition>
-    );
-  }
-}
+export default (props: Props) => (
+  <CSSTransition
+    in={props.toggle}
+    timeout={10}
+    classNames={`drop${props.drop}`}
+  >
+    <button
+      className={classnames('square', props.style)}
+      onClick={() => props.onClick()}
+      type="button"
+    >
+      {props.value}
+    </button>
+  </CSSTransition>
+);

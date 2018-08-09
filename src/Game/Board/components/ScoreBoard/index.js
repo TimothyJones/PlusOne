@@ -3,7 +3,7 @@
 import React from 'react';
 import classnames from 'classnames';
 
-import config from '../../../../config.js';
+import config from '../../../../config';
 import './scoreboard.css';
 
 type Props = {
@@ -16,9 +16,9 @@ type Props = {
 };
 
 export default class ScoreBoard extends React.Component<Props> {
-  scoreFor(score: number) {
+  static scoreFor(score: number) {
     return (
-      <span className={classnames('score', 'color' + score)}>{score}</span>
+      <span className={classnames('score', `color${score}`)}>{score}</span>
     );
   }
 
@@ -29,11 +29,11 @@ export default class ScoreBoard extends React.Component<Props> {
 
     const score = this.props.canMove ? (
       <p className={classnames(scoresClasses)}>
-        Current score: {this.scoreFor(this.props.currentScore)}
+        Current score: {ScoreBoard.scoreFor(this.props.currentScore)}
       </p>
     ) : (
       <p className={classnames(scoresClasses, 'warning')}>
-        No more moves! Score: {this.scoreFor(this.props.currentScore)}
+        No more moves! Score: {ScoreBoard.scoreFor(this.props.currentScore)}
       </p>
     );
 
@@ -58,7 +58,7 @@ export default class ScoreBoard extends React.Component<Props> {
     const globalHighScore =
       config.features.ScoreServer && this.props.globalHighScore ? (
         <p className="text scores">
-          Global high score: {this.scoreFor(this.props.globalHighScore)}
+          Global high score: {ScoreBoard.scoreFor(this.props.globalHighScore)}
         </p>
       ) : (
         ''
@@ -69,11 +69,13 @@ export default class ScoreBoard extends React.Component<Props> {
         {score}
         {reachedBy}
         <p className="text scores">
-          Your high score: {this.scoreFor(this.props.highScore)}
+          Your high score: {ScoreBoard.scoreFor(this.props.highScore)}
         </p>
         {globalHighScore}
         <p className="scores">
-          <button onClick={() => this.props.onReset()}>reset</button>
+          <button onClick={() => this.props.onReset()} type="button">
+            reset
+          </button>
         </p>
       </div>
     );

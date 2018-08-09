@@ -1,7 +1,9 @@
-import { Pact, Matchers } from '@pact-foundation/pact';
-import api from './index.js';
+import { Matchers } from '@pact-foundation/pact';
+import api from './index';
 
-const { like, integer } = Matchers;
+/* global url port provider */
+
+const { like } = Matchers;
 
 describe('ScoreBoard request', () => {
   const scoreBoard = api(
