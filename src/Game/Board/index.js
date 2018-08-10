@@ -144,7 +144,7 @@ export default class Board extends React.Component<Props, State> {
     };
   }
 
-  borderWith(i, j, value) {
+  borderWith(i: number, j: number, value: ?number) {
     const { x, y } = this.props;
     if (i < 0 || i >= x) return true;
     if (j < 0 || j >= y) return true;
