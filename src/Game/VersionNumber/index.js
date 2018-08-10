@@ -9,6 +9,6 @@ import './versionnumber.css';
 export default () => (
   <div>
     <div className="bar" />
-    <p className="version">v{config.version}</p>
+    <p className="version">{config.version}</p>
   </div>
 );
