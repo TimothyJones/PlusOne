@@ -2,7 +2,7 @@ const publisher = require('@pact-foundation/pact-node');
 const path = require('path');
 const gitRevision = require('git-revision-webpack-plugin');
 
-let opts = {
+const opts = {
   pactFilesOrDirs: [path.resolve(process.cwd(), 'pacts')],
   pactBroker: process.env.PACT_BROKER_HOST,
   pactBrokerUsername: process.env.PACT_BROKER_USERNAME,
@@ -10,4 +10,4 @@ let opts = {
   consumerVersion: (new gitRevision()).version()
 };
 
-publisher.publishPacts(opts).then(() => done());
+publisher.publishPacts(opts);
