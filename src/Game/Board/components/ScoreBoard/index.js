@@ -22,6 +22,28 @@ export default class ScoreBoard extends React.Component<Props> {
     );
   }
 
+  reachedBy() {
+    if (config.features.ScoreServer) {
+      if (this.props.currentScoreReachedBy && this.props.currentScore !== 6) {
+        return (
+          <p className="reachedBy">
+            {this.props.currentScoreReachedBy > 1
+              ? `reached ${this.props.currentScoreReachedBy} times`
+              : 'reached only by you!'}
+          </p>
+        );
+      }
+      return (
+        <p className="reachedBy">
+          {this.props.currentScore === 6
+            ? 'reached by everyone'
+            : '...connecting'}
+        </p>
+      );
+    }
+    return '';
+  }
+
   render() {
     const scoresClasses = config.features.ScoreServer
       ? ['scores', 'withScoreServer']
@@ -37,23 +59,7 @@ export default class ScoreBoard extends React.Component<Props> {
       </p>
     );
 
-    const reachedBy = config.features.ScoreServer ? (
-      this.props.currentScoreReachedBy && this.props.currentScore !== 6 ? (
-        <p className="reachedBy">
-          {this.props.currentScoreReachedBy > 1
-            ? `reached ${this.props.currentScoreReachedBy} times`
-            : 'reached only by you!'}
-        </p>
-      ) : (
-        <p className="reachedBy">
-          {this.props.currentScore === 6
-            ? 'reached by everyone'
-            : '...connecting'}
-        </p>
-      )
-    ) : (
-      '' // Scoreboard server feature disabled
-    );
+    const reachedBy = this.reachedBy();
 
     const globalHighScore =
       config.features.ScoreServer && this.props.globalHighScore ? (
