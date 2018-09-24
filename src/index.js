@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
 
 import Game from './Game';
-import config from './config';
 import './index.css';
 
 /* global document */
