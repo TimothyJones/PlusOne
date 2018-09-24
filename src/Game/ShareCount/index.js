@@ -18,6 +18,9 @@ import './sharecount.css';
 
 type Props = { url: string };
 
+export const shareCount = (count: number) =>
+  count !== 0 ? <p className="shareCount">{count}</p> : <p />;
+
 export default (props: Props) => {
   const { url } = props;
   return (
@@ -26,15 +29,7 @@ export default (props: Props) => {
       <FacebookShareButton url={url}>
         <span className="shareButton">
           <FacebookIcon size={44} round />
-          <FacebookShareCount url={url}>
-            {(shareCount: number) =>
-              shareCount !== 0 ? (
-                <p className="shareCount">{shareCount}</p>
-              ) : (
-                <p />
-              )
-            }
-          </FacebookShareCount>
+          <FacebookShareCount url={url}>{shareCount}</FacebookShareCount>
         </span>
       </FacebookShareButton>
       <TwitterShareButton url={url}>
@@ -45,15 +40,7 @@ export default (props: Props) => {
       <RedditShareButton url={url}>
         <span className="shareButton">
           <RedditIcon size={44} round />
-          <RedditShareCount url={url}>
-            {(shareCount: number) =>
-              shareCount !== 0 ? (
-                <p className="shareCount">{shareCount}</p>
-              ) : (
-                <p />
-              )
-            }
-          </RedditShareCount>
+          <RedditShareCount url={url}>{shareCount}</RedditShareCount>
         </span>
       </RedditShareButton>
       <span className="shareButton">

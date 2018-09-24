@@ -1,7 +1,7 @@
 {
   "parser": "babel-eslint",
   "extends": [ "plugin:flowtype/recommended" , "airbnb" , "prettier" ],
-  "plugins": [ "flowtype" ],
+  "plugins": [ "flowtype", "jasmine" ],
   "settings": {
     "import/resolver": {
       "node": {
@@ -10,7 +10,8 @@
     }
   },
   "env": {
-      "jest": true
+      "jest": true,
+      "jasmine": true
   },
   "rules" : {
     "no-console": ["error", { allow: ["warn", "error", "info"] }],

@@ -1,5 +1,8 @@
-const path = require('path');
-const { Pact } = require('@pact-foundation/pact');
+import path from 'path';
+import { Pact } from '@pact-foundation/pact';
+import 'raf/polyfill';
+import { configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 
 global.url = 'http://localhost';
 global.port = 8989;
@@ -13,3 +16,5 @@ global.provider = new Pact({
   consumer: 'The Plus One Game Client',
   provider: 'The Plus One Game ScoreBoard Service'
 });
+
+configure({ adapter: new Adapter() });
