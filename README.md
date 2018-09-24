@@ -19,11 +19,11 @@ Bonus: Each time you merge white cells, the lowest numbered cells also fall off 
 
 Written in [React](https://reactjs.org/), as a practice project. It includes / uses:
 
-* Unit tests for the game functions with [Jest](https://facebook.github.io/jest/)
 * Browser local storage provided with [store.js](https://github.com/marcuswestin/store.js/)
 * CSS transitions / animations with a misuse of [react-transition-group](https://reactcommunity.org/react-transition-group/css-transition)
+* Unit tests with [Jest](https://facebook.github.io/jest/) and [Enzyme](http://airbnb.io/enzyme/)
+* Contract tests with a score board server with [Pact](https://docs.pact.io/)
 * Type checking with [flow-types](https://flow.org/)
 * Linting with [eslint](https://eslint.org/), and considerable configuration to get it to play nice with react and prettier
-* Contract tests with a score board server with [Pact](https://docs.pact.io/)
 * Overridden webpack config with [react-app-rewired](https://github.com/timarney/react-app-rewired)
 * Code structure following [this guide](https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3ea1920f1) from [@alexmngn](https://twitter.com/alexmngn)
