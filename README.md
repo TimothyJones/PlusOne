@@ -6,6 +6,7 @@ A game inspired by cell merging mobile games.
 [![Pact Status](https://test.pact.dius.com.au/pacts/provider/The%20Plus%20One%20Game%20ScoreBoard%20Service/consumer/The%20Plus%20One%20Game%20Client/latest/badge.svg)](https://test.pact.dius.com.au/pacts/provider/The%20Plus%20One%20Game%20ScoreBoard%20Service/consumer/The%20Plus%20One%20Game%20Client/latest)
 [![Maintainability](https://api.codeclimate.com/v1/badges/79b5d9becb22480550a3/maintainability)](https://codeclimate.com/github/TimothyJones/PlusOne/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/79b5d9becb22480550a3/test_coverage)](https://codeclimate.com/github/TimothyJones/PlusOne/test_coverage)
+[![Known Vulnerabilities](https://snyk.io/test/github/TimothyJones/PlusOne/badge.svg?targetFile=package.json)](https://snyk.io/test/github/TimothyJones/PlusOne?targetFile=package.json)
 
 You can play it [here](https://timothyjones.github.io/PlusOne/).
 
