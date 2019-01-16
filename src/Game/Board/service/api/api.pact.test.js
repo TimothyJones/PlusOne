@@ -8,7 +8,7 @@ const { like } = Matchers;
 describe('ScoreBoard consumer', () => {
   jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 
-  beforeEach(() => provider.setup());
+  beforeAll(() => provider.setup());
   afterEach(() => provider.verify());
   afterAll(() => provider.finalize());
 
