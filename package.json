@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@pact-foundation/pact": "^5.9.0",
-    "@pact-foundation/pact-node": "^6.19.8",
+    "@pact-foundation/pact-node": "^6.21.2",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.6",
     "babel-preset-flow": "^6.23.0",

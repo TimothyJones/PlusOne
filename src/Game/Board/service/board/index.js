@@ -55,17 +55,10 @@ export function getMax(squares: BoardState): number {
   }, 0);
 }
 
-export function refill(
-  board: BoardState,
-  max: number,
-  forbidden: Array<number> = []
-): BoardState {
+export function refill(board: BoardState, max: number, forbidden: Array<number> = []): BoardState {
   const squares: BoardState = JSON.parse(JSON.stringify(board));
 
-  const min = Math.min(
-    Math.max(max - config.generator.usualRange, 1),
-    getMin(squares)
-  );
+  const min = Math.min(Math.max(max - config.generator.usualRange, 1), getMin(squares));
 
   const possibleNumbers = [];
 
@@ -82,8 +75,7 @@ export function refill(
     arr.map(sq => {
       if (sq.value === null) {
         return {
-          value:
-            possibleNumbers[Math.floor(Math.random() * possibleNumbers.length)],
+          value: possibleNumbers[Math.floor(Math.random() * possibleNumbers.length)],
           drop: 5,
           toggle: sq.toggle,
           merged: false
@@ -144,20 +136,14 @@ export function canMove(squares: BoardState): boolean {
   return false;
 }
 
-export function toggleChanges(
-  oldBoardState: BoardState,
-  newBoardState: BoardState
-): BoardState {
+export function toggleChanges(oldBoardState: BoardState, newBoardState: BoardState): BoardState {
   const squares: BoardState = JSON.parse(JSON.stringify(newBoardState));
   const x = squares.length;
   const y = squares[0].length;
 
   for (let i = 0; i < x; i += 1) {
     for (let j = 0; j < y; j += 1) {
-      if (
-        oldBoardState[i][j].value !== newBoardState[i][j].value ||
-        newBoardState[i][j].drop > 0
-      ) {
+      if (oldBoardState[i][j].value !== newBoardState[i][j].value || newBoardState[i][j].drop > 0) {
         squares[i][j].toggle = !oldBoardState[i][j].toggle;
       }
     }
@@ -178,11 +164,7 @@ export function stripMerge(board: BoardState) {
   return squares;
 }
 
-export function collapse(
-  collapseX: number,
-  collapseY: number,
-  board: BoardState
-): BoardState {
+export function collapse(collapseX: number, collapseY: number, board: BoardState): BoardState {
   const squares: BoardState = stripMerge(JSON.parse(JSON.stringify(board)));
 
   const x = squares.length;
@@ -197,13 +179,7 @@ export function collapse(
     if (squares[i][j].value !== value) return 0;
 
     squares[i][j].value = null;
-    return (
-      1 +
-      update(i + 1, j) +
-      update(i - 1, j) +
-      update(i, j + 1) +
-      update(i, j - 1)
-    );
+    return 1 + update(i + 1, j) + update(i - 1, j) + update(i, j + 1) + update(i, j - 1);
   }
   if (update(collapseX, collapseY) > 1) {
     squares[collapseX][collapseY].value = value + 1;
