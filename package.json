@@ -18,8 +18,7 @@
     "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
-    "@pact-foundation/pact": "^5.9.0",
-    "@pact-foundation/pact-node": "^6.21.2",
+    "@pact-foundation/pact": "^9.5.0",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.6",
     "babel-preset-flow": "^6.23.0",
