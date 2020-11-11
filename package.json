@@ -6,16 +6,17 @@
   "private": true,
   "dependencies": {
     "classnames": "^2.2.5",
-    "cross-fetch": "^2.1.1",
-    "flow-typed": "^2.4.0",
+    "cross-fetch": "^3.0.6",
+    "flow-typed": "^3.0.0",
     "prettier": "^1.12.1",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
     "react-share": "^2.1.1",
     "react-transition-group": "^2.3.1",
     "store": "^2.0.12",
     "uuid": "^3.2.1",
-    "whatwg-fetch": "^2.0.4"
+    "whatwg-fetch": "^2.0.4",
+    "snyk": "^1.425.3"
   },
   "devDependencies": {
     "@pact-foundation/pact": "^9.5.0",
@@ -52,7 +53,9 @@
     "preversion": "npm run flow && npm run lint && npm run test && npm run build",
     "postversion": "npm run pactPublish && git push",
     "lint": "eslint 'src/**/*.js'",
-    "lint-fix": "eslint --fix 'src/**/*.js'"
+    "lint-fix": "eslint --fix 'src/**/*.js'",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -62,5 +65,6 @@
     "setupFiles": [
       "./testSetup.js"
     ]
-  }
+  },
+  "snyk": true
 }
