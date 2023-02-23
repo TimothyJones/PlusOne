@@ -7,7 +7,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "cross-fetch": "^3.0.6",
-    "flow-typed": "^3.0.0",
+    "flow-typed": "^3.8.0",
     "prettier": "^1.12.1",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
