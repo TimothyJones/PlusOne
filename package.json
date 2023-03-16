@@ -16,7 +16,7 @@
     "store": "^2.0.12",
     "uuid": "^3.2.1",
     "whatwg-fetch": "^2.0.4",
-    "snyk": "^1.425.3"
+    "snyk": "^1.1119.0"
   },
   "devDependencies": {
     "@pact-foundation/pact": "^9.5.0",
