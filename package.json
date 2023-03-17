@@ -14,7 +14,7 @@
     "react-share": "^2.1.1",
     "react-transition-group": "^2.9.0",
     "store": "^2.0.12",
-    "uuid": "^3.2.1",
+    "uuid": "^3.4.0",
     "whatwg-fetch": "^2.0.4",
     "snyk": "^1.1109.0"
   },
