@@ -5,7 +5,7 @@
   "homepage": "http://timothyjones.github.io/PlusOne",
   "private": true,
   "dependencies": {
-    "classnames": "^2.2.5",
+    "classnames": "^2.3.2",
     "cross-fetch": "^3.1.5",
     "flow-typed": "^3.8.0",
     "prettier": "^1.19.1",
