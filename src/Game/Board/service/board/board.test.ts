@@ -16,7 +16,7 @@ function createBoard() {
 }
 
 describe('killMinimum function ', () => {
-  let board;
+  let board: ReturnType<typeof createBoard>;
   beforeEach(() => {
     board = createBoard();
   });
@@ -41,14 +41,14 @@ describe('killMinimum function ', () => {
   test('All minimums', () => {
     const newBoard = killMinimum([
       [
-        { value: 2, drop: 0, toggle: true },
-        { value: 2, drop: 0, toggle: true },
-        { value: 2, drop: 0, toggle: true }
+        { value: 2, drop: 0, toggle: true, merged: false },
+        { value: 2, drop: 0, toggle: true, merged: false },
+        { value: 2, drop: 0, toggle: true, merged: false }
       ],
       [
-        { value: 2, drop: 0, toggle: true },
-        { value: 2, drop: 0, toggle: true },
-        { value: 2, drop: 0, toggle: true }
+        { value: 2, drop: 0, toggle: true, merged: false },
+        { value: 2, drop: 0, toggle: true, merged: false },
+        { value: 2, drop: 0, toggle: true, merged: false }
       ]
     ]);
     newBoard.forEach(arr => {
@@ -90,7 +90,7 @@ describe('stripMerge function', () => {
 });
 
 describe('getMax function', () => {
-  let board;
+  let board: ReturnType<typeof createBoard>;
   beforeEach(() => {
     board = createBoard();
   });
@@ -167,7 +167,7 @@ describe('can move function ', () => {
 });
 
 describe('getMin function', () => {
-  let board;
+  let board: ReturnType<typeof createBoard>;
   beforeEach(() => {
     board = createBoard();
   });

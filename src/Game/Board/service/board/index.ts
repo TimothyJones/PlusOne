@@ -1,12 +1,10 @@
-// @flow
-
 import config from '../../../../config';
 
 type SquareState = {
-  value: number | null,
-  drop: number,
-  toggle: boolean,
-  merged: boolean
+  value: number | null;
+  drop: number;
+  toggle: boolean;
+  merged: boolean;
 };
 
 export type BoardState = Array<Array<SquareState>>;
@@ -24,7 +22,7 @@ export function getMin(squares: BoardState): number {
 }
 
 export function killMinimum(oldSquares: BoardState): BoardState {
-  const squares = JSON.parse(JSON.stringify(oldSquares));
+  const squares: BoardState = JSON.parse(JSON.stringify(oldSquares));
 
   const min = getMin(squares);
 
@@ -60,7 +58,7 @@ export function refill(board: BoardState, max: number, forbidden: Array<number> 
 
   const min = Math.min(Math.max(max - config.generator.usualRange, 1), getMin(squares));
 
-  const possibleNumbers = [];
+  const possibleNumbers: number[] = [];
 
   for (let i = min; i < max; i += 1) {
     if (!forbidden.includes(i)) {
@@ -114,7 +112,7 @@ export function dropBoard(board: BoardState): BoardState {
 export function canMove(squares: BoardState): boolean {
   const x = squares.length;
   const y = squares[0].length;
-  function possibleMoveWith(i, j, value) {
+  function possibleMoveWith(i: number, j: number, value: number | null) {
     if (i < 0 || i >= x) return false;
     if (j < 0 || j >= y) return false;
     if (squares[i][j].value === value) return true;
@@ -173,7 +171,7 @@ export function collapse(collapseX: number, collapseY: number, board: BoardState
   const { value } = squares[collapseX][collapseY];
   const max = getMax(squares);
 
-  function update(i, j) {
+  function update(i: number, j: number): number {
     if (i < 0 || i >= x) return 0;
     if (j < 0 || j >= y) return 0;
     if (squares[i][j].value !== value) return 0;
@@ -182,9 +180,9 @@ export function collapse(collapseX: number, collapseY: number, board: BoardState
     return 1 + update(i + 1, j) + update(i - 1, j) + update(i, j + 1) + update(i, j - 1);
   }
   if (update(collapseX, collapseY) > 1) {
-    squares[collapseX][collapseY].value = value + 1;
+    squares[collapseX][collapseY].value = value! + 1;
     squares[collapseX][collapseY].merged = true;
-    if (squares[collapseX][collapseY].value > max) {
+    if (squares[collapseX][collapseY].value! > max) {
       return killMinimum(squares);
     }
   } else {

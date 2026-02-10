@@ -1,21 +1,19 @@
-// @flow
-
 export type FeatureFlags = {
-  ScoreServer: boolean,
-  StartWithOnesOnly: boolean
+  ScoreServer: boolean;
+  StartWithOnesOnly: boolean;
 };
 
 export type GeneratorConfig = {
-  maxInitial: number,
-  usualRange: number
+  maxInitial: number;
+  usualRange: number;
 };
 
 export type Config = {
-  version: string,
-  providerUrl: string,
-  homepage: string,
-  generator: GeneratorConfig,
-  features: FeatureFlags
+  version: string;
+  providerUrl: string;
+  homepage: string;
+  generator: GeneratorConfig;
+  features: FeatureFlags;
 };
 
 const config: Config = {

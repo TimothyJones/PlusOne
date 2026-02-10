@@ -1,8 +1,6 @@
-// @flow
-
 import React from 'react';
 import store from 'store';
-import uuidv4 from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 
 import './board.css';
 
@@ -23,23 +21,23 @@ import type { BoardState } from './service/board';
 import type { ScoreBoardFromServer } from './service/api';
 
 type Props = {
-  x: number,
-  y: number,
-  maxInitial: number
+  x: number;
+  y: number;
+  maxInitial: number;
 };
 
 type State = {
-  max: number,
-  highScore: number,
-  canMove: boolean,
-  squares: BoardState,
-  currentScoreReachedBy: ?number,
-  globalHighScore: ?number
+  max: number;
+  highScore: number;
+  canMove: boolean;
+  squares: BoardState;
+  currentScoreReachedBy: number | undefined;
+  globalHighScore: number | undefined;
 };
 
 export default class Board extends React.Component<Props, State> {
   static determineHighScore(max: number): number {
-    const storedHighScore: ?number = store.get('highScore');
+    const storedHighScore: number | undefined = store.get('highScore');
     if (
       storedHighScore === undefined ||
       storedHighScore === null ||
@@ -57,7 +55,7 @@ export default class Board extends React.Component<Props, State> {
   }
 
   static getUserId(): string {
-    const storedUserId: ?string = store.get('user');
+    const storedUserId: string | undefined = store.get('user');
     if (storedUserId === undefined || storedUserId === null) {
       store.set('user', uuidv4());
     }
@@ -92,7 +90,7 @@ export default class Board extends React.Component<Props, State> {
   handleClick(i: number, j: number) {
     const collapsedBoard = collapse(i, j, this.state.squares);
     const newMax = getMax(collapsedBoard);
-    const forbiddenSquares = [];
+    const forbiddenSquares: number[] = [];
 
     if (newMax > this.state.max) {
       forbiddenSquares.push(getMin(this.state.squares));
@@ -115,7 +113,7 @@ export default class Board extends React.Component<Props, State> {
     const scoreServer = api(config.providerUrl, Board.getUserId());
 
     if ((this.state && max !== this.state.max) || !this.state) {
-      scoreServer.reachedScore(max).then((resp: ?ScoreBoardFromServer) => {
+      scoreServer.reachedScore(max).then((resp: ScoreBoardFromServer | undefined) => {
         this.setState(state => ({
           ...state,
           currentScoreReachedBy: resp ? resp.reachedBy : undefined,
@@ -144,7 +142,7 @@ export default class Board extends React.Component<Props, State> {
     };
   }
 
-  borderWith(i: number, j: number, value: ?number) {
+  borderWith(i: number, j: number, value: number | null) {
     const { x, y } = this.props;
     if (i < 0 || i >= x) return true;
     if (j < 0 || j >= y) return true;
@@ -156,7 +154,7 @@ export default class Board extends React.Component<Props, State> {
     const { squares } = this.state;
     const { value, drop, toggle, merged } = squares[i][j];
 
-    const style = {
+    const style: { [key: string]: boolean } = {
       leftBorder: this.borderWith(i - 1, j, value),
       noLeftBorder: !this.borderWith(i - 1, j, value),
       rightBorder: this.borderWith(i + 1, j, value),
