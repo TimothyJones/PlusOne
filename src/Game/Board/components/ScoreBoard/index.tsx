@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 import classnames from 'classnames';
 
@@ -7,12 +5,12 @@ import config from '../../../../config';
 import './scoreboard.css';
 
 type Props = {
-  highScore: number,
-  currentScore: number,
-  currentScoreReachedBy: ?number,
-  globalHighScore: ?number,
-  canMove: boolean,
-  onReset: () => void
+  highScore: number;
+  currentScore: number;
+  currentScoreReachedBy: number | null | undefined;
+  globalHighScore: number | null | undefined;
+  canMove: boolean;
+  onReset: () => void;
 };
 
 export default class ScoreBoard extends React.Component<Props> {

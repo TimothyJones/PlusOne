@@ -1,7 +1,7 @@
 import { refill } from './index';
 
 describe('refill function', () => {
-  function check(cell) {
+  function check(cell: { value: number | null; drop: number; toggle: boolean; merged: boolean }) {
     expect(cell.value).toBeGreaterThan(0);
     expect(cell.value).toBeLessThan(10);
     expect(cell.drop).toBeGreaterThan(0);

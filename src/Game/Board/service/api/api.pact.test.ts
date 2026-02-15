@@ -1,12 +1,14 @@
 import { Matchers } from '@pact-foundation/pact';
 import api from './index';
 
-/* global url port provider */
+declare var url: string;
+declare var port: number;
+declare var provider: any;
 
 const { like } = Matchers;
 
 describe('ScoreBoard consumer', () => {
-  jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+  jest.setTimeout(10000);
 
   beforeAll(() => provider.setup());
   afterEach(() => provider.verify());
@@ -51,7 +53,7 @@ describe('ScoreBoard consumer', () => {
       it('returns the number of times this score has been reached', done => {
         scoreBoard
           .reachedScore(12)
-          .then(({ reachedBy, globalHighScore }) => {
+          .then(({ reachedBy, globalHighScore }: any) => {
             expect(reachedBy).toEqual(EXPECTED_BODY.timesReached);
             expect(globalHighScore).toEqual(EXPECTED_BODY.globalHighScore);
           })

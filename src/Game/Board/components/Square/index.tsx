@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 import classnames from 'classnames';
 import { CSSTransition } from 'react-transition-group';
@@ -7,11 +5,11 @@ import { CSSTransition } from 'react-transition-group';
 import './square.css';
 
 type Props = {
-  toggle: boolean,
-  drop: number,
-  style: {},
-  value: number | string,
-  onClick: () => void
+  toggle: boolean;
+  drop: number;
+  style: { [key: string]: boolean };
+  value: number | string;
+  onClick: () => void;
 };
 
 export default (props: Props) => (
